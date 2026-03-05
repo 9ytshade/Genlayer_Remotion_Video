@@ -44,6 +44,9 @@ export const Video04_GenVM: React.FC = () => {
                                     { word: 'GenVM', color: COLORS.accentPrimary },
                                     { word: 'Intelligent Contracts', color: COLORS.accentSecondary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Python.png"
+                                imagePosition="right"
+                                durationInFrames={s(15)}
                             />
                         ),
                     },
@@ -55,6 +58,8 @@ export const Video04_GenVM: React.FC = () => {
                                 term="GenVM"
                                 subtitle="A Python-based environment that connects smart contracts to the internet and LLMs."
                                 accentColor={COLORS.accentPrimary}
+                                logoSrc="assets/logos/python.png"
+                                logoCount={5}
                             />
                         ),
                     },
@@ -105,6 +110,9 @@ export const Video04_GenVM: React.FC = () => {
                                     'make_http_request() to fetch web data',
                                     'run_llm() to process text',
                                 ]}
+                                imagePath="assets/mochi/Mochi-python-LLM-Https.png"
+                                imagePosition="right"
+                                durationInFrames={s(15)}
                             />
                         ),
                     },

@@ -4,6 +4,8 @@ import {
     useCurrentFrame,
     interpolate,
     Easing,
+    Img,
+    staticFile,
 } from 'remotion';
 import { MaskedTextReveal } from '../animations/MaskedTextReveal';
 import { SignalWave } from '../animations/SignalWave';
@@ -17,6 +19,8 @@ interface ConceptRevealProps {
     accentColor?: string;
     signalFrame?: number;
     pills?: string[];
+    logoSrc?: string;
+    logoCount?: number;
 }
 
 /**
@@ -29,6 +33,8 @@ export const ConceptReveal: React.FC<ConceptRevealProps> = ({
     accentColor = COLORS.accentPrimary,
     signalFrame = 15,
     pills,
+    logoSrc,
+    logoCount = 0,
 }) => {
     const frame = useCurrentFrame();
 
@@ -64,6 +70,8 @@ export const ConceptReveal: React.FC<ConceptRevealProps> = ({
         easing: Easing.out(Easing.cubic),
     });
 
+    const shouldShowLogos = !!logoSrc && logoCount > 0;
+
     return (
         <AbsoluteFill
             style={{
@@ -85,6 +93,71 @@ export const ConceptReveal: React.FC<ConceptRevealProps> = ({
 
             {/* Signal wave */}
             <SignalWave triggerFrame={signalFrame} color={accentColor} />
+
+            {/* Orbiting logos */}
+            {shouldShowLogos &&
+                Array.from({ length: logoCount }).map((_, i) => {
+                    const appearStart = 20 + i * 5;
+                    const appearEnd = appearStart + 15;
+
+                    const logoOpacity = interpolate(
+                        frame,
+                        [appearStart, appearEnd],
+                        [0, 1],
+                        {
+                            extrapolateLeft: 'clamp',
+                            extrapolateRight: 'clamp',
+                            easing: Easing.out(Easing.cubic),
+                        }
+                    );
+
+                    const orbitProgress = (frame + i * 15) * 0.03;
+                    const radiusX = 260;
+                    const radiusY = 140;
+
+                    const x = Math.cos(orbitProgress) * radiusX;
+                    const y = Math.sin(orbitProgress * 1.3) * radiusY;
+
+                    const floatY = Math.sin((frame + i * 10) * 0.06) * 10;
+
+                    const rotation = interpolate(
+                        frame,
+                        [0, 200],
+                        [0, 360],
+                        {
+                            extrapolateLeft: 'clamp',
+                            extrapolateRight: 'extend',
+                        }
+                    );
+
+                    return (
+                        <div
+                            key={i}
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                width: 72,
+                                height: 72,
+                                marginTop: -36,
+                                marginLeft: -36,
+                                transform: `translate(${x}px, ${y + floatY}px) rotate(${rotation}deg)`,
+                                opacity: logoOpacity,
+                                pointerEvents: 'none',
+                                filter: `drop-shadow(0 0 20px ${accentColor}80)`,
+                            }}
+                        >
+                            <Img
+                                src={staticFile(logoSrc)}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'contain',
+                                }}
+                            />
+                        </div>
+                    );
+                })}
 
             {/* Main term */}
             <MaskedTextReveal

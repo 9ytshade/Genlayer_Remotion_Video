@@ -43,6 +43,9 @@ export const Video05_OptimisticDemocracy: React.FC = () => {
                                     { word: 'subjective', color: COLORS.accentSecondary },
                                     { word: 'consensus', color: COLORS.accentPrimary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video05-Scene02.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -72,6 +75,9 @@ export const Video05_OptimisticDemocracy: React.FC = () => {
                                     { word: 'Equivalence Principle', color: COLORS.accentTertiary },
                                     { word: 'appeal', color: COLORS.accentSecondary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video05-Scene04.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -95,6 +101,9 @@ export const Video05_OptimisticDemocracy: React.FC = () => {
                                     { word: 'dispute', color: COLORS.accentPrimary },
                                     { word: 'network corrects it', color: COLORS.accentSecondary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video05-Scene05.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

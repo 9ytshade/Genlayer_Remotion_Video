@@ -44,6 +44,9 @@ export const Video06_EquivalencePrinciple: React.FC = () => {
                                     { word: 'A" must equal "A', color: COLORS.accentSecondary },
                                     { word: 'fuzzier', color: COLORS.textMuted },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video06-Scene02.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -101,6 +104,9 @@ export const Video06_EquivalencePrinciple: React.FC = () => {
                                     { word: 'judge equivalence', color: COLORS.accentTertiary },
                                     { word: 'consensus', color: COLORS.accentPrimary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video05-Scene02.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
