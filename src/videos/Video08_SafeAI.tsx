@@ -43,6 +43,9 @@ export const Video08_SafeAI: React.FC = () => {
                                     { word: 'hallucinate', color: COLORS.accentSecondary },
                                     { word: 'using many', color: COLORS.accentPrimary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video08-Scene02.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -77,6 +80,9 @@ export const Video08_SafeAI: React.FC = () => {
                                     'Adversarial Protection',
                                     'Economic Penalties for Errors',
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video08-Scene04.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -95,6 +101,9 @@ export const Video08_SafeAI: React.FC = () => {
                                     { word: 'different LLMs', color: COLORS.accentTertiary },
                                     { word: 'diversity', color: COLORS.accentSecondary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video08-Scene05.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

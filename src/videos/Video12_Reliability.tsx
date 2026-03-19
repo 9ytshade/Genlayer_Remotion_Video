@@ -44,6 +44,9 @@ export const Video12_Reliability: React.FC = () => {
                                     { word: 'probabilistic', color: COLORS.accentSecondary },
                                     { word: 'deterministic', color: COLORS.accentPrimary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video12-Scene02.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -73,6 +76,9 @@ export const Video12_Reliability: React.FC = () => {
                                     { word: '99.999%', color: COLORS.accentPrimary },
                                     { word: 'protocol level', color: COLORS.accentTertiary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video12-Scene04.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

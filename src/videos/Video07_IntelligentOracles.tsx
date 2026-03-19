@@ -104,6 +104,9 @@ export const Video07_IntelligentOracles: React.FC = () => {
                                     'Trigger insurance by checking NOAA weather reports',
                                     'Check stock prices directly from Nasdaq',
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video07-Scene05.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

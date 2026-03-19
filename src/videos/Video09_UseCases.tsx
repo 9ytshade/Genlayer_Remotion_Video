@@ -41,6 +41,9 @@ export const Video09_UseCases: React.FC = () => {
                                 highlights={[
                                     { word: 'change the game', color: COLORS.accentPrimary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video09-Scene02.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -71,6 +74,9 @@ export const Video09_UseCases: React.FC = () => {
                                     { word: 'reads the news', color: COLORS.accentPrimary },
                                     { word: 'instantly', color: COLORS.accentTertiary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video09-Scene04.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -100,6 +106,9 @@ export const Video09_UseCases: React.FC = () => {
                                     { word: 'pays out automatically', color: COLORS.accentPrimary },
                                     { word: 'No paperwork', color: COLORS.accentSecondary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video09-Scene06.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -130,6 +139,9 @@ export const Video09_UseCases: React.FC = () => {
                                     { word: 'read proposals', color: COLORS.accentTertiary },
                                     { word: 'True autonomous', color: COLORS.accentPrimary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video09-Scene08.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

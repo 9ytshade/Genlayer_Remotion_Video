@@ -43,6 +43,9 @@ export const Video10_DecentralizedIdentity: React.FC = () => {
                                     { word: 'wallet address', color: COLORS.textMuted },
                                     { word: 'reputation', color: COLORS.accentPrimary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video10-Scene02.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -72,6 +75,9 @@ export const Video10_DecentralizedIdentity: React.FC = () => {
                                     { word: 'reads that tweet', color: COLORS.accentPrimary },
                                     { word: 'No centralized verifier', color: COLORS.accentTertiary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video10-Scene04.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -95,6 +101,9 @@ export const Video10_DecentralizedIdentity: React.FC = () => {
                                     { word: 'reputation', color: COLORS.accentPrimary },
                                     { word: 'Sybil resistance', color: COLORS.accentSecondary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video10-Scene05.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

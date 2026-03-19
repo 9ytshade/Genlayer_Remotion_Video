@@ -43,6 +43,9 @@ export const Video13_PythonCode: React.FC = () => {
                                     { word: 'huge barrier', color: COLORS.textMuted },
                                     { word: 're-invent the wheel', color: COLORS.accentSecondary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video13-Scene02.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

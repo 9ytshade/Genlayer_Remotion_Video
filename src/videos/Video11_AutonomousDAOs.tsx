@@ -43,6 +43,9 @@ export const Video11_AutonomousDAOs: React.FC = () => {
                                     { word: 'multisig wallets', color: COLORS.accentSecondary },
                                     { word: 'digital bureaucracies', color: COLORS.textMuted },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video11-Scene02.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -72,6 +75,9 @@ export const Video11_AutonomousDAOs: React.FC = () => {
                                     { word: 'executive branch', color: COLORS.accentPrimary },
                                     { word: 'checks the project', color: COLORS.accentSecondary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video11-Scene04.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -90,6 +96,9 @@ export const Video11_AutonomousDAOs: React.FC = () => {
                                     { word: 'speed of software', color: COLORS.accentPrimary },
                                     { word: 'Micro-decisions', color: COLORS.accentTertiary },
                                 ]}
+                                imagePath="assets/mochi/Mochi-Video11-Scene05.png"
+                                imagePosition="right"
+                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
