@@ -184,22 +184,78 @@ export const ValidatorConsensusScene: React.FC = () => {
                 );
             })()}
 
+            {/* FACT BEING VERIFIED card */}
+            {(() => {
+                const factOpacity = interpolate(frame, [30, 44], [0, 1], {
+                    extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic),
+                });
+                const factY = interpolate(frame, [30, 44], [20, 0], {
+                    extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic),
+                });
+                return (
+                    <div style={{
+                        opacity: factOpacity,
+                        transform: `translateY(${factY}px)`,
+                        background: `${COLORS.accentSecondary}12`,
+                        border: `1px solid ${COLORS.accentSecondary}40`,
+                        borderRadius: 14,
+                        padding: `${SPACING.md}px ${SPACING.xl}px`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: SPACING.lg,
+                    }}>
+                        <div style={{ fontSize: 32, flexShrink: 0 }}>📰</div>
+                        <div>
+                            <div style={{
+                                fontFamily: FONTS.primary,
+                                fontSize: FONTS.sizes.caption,
+                                fontWeight: FONTS.weights.bold,
+                                color: COLORS.accentSecondary,
+                                textTransform: 'uppercase',
+                                letterSpacing: 2,
+                                marginBottom: 4,
+                            }}>
+                                Fact submitted for verification
+                            </div>
+                            <div style={{
+                                fontFamily: 'monospace',
+                                fontSize: FONTS.sizes.body,
+                                color: COLORS.textPrimary,
+                            }}>
+                                "Bitcoin ETF approved by SEC on January 10, 2024"
+                            </div>
+                        </div>
+                        <div style={{
+                            marginLeft: 'auto',
+                            flexShrink: 0,
+                            fontFamily: FONTS.primary,
+                            fontSize: FONTS.sizes.caption,
+                            color: COLORS.textMuted,
+                            background: `${COLORS.textMuted}15`,
+                            padding: '6px 16px',
+                            borderRadius: 99,
+                        }}>
+                            Pending...
+                        </div>
+                    </div>
+                );
+            })()}
+
             {/* Validator row */}
             <div
                 style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'flex-start',
-                    flex: 1,
                     position: 'relative',
-                    paddingTop: SPACING.xl,
+                    paddingTop: SPACING.sm,
                 }}
             >
                 {/* Connecting lines (SVG) */}
                 <svg
                     style={{
                         position: 'absolute',
-                        top: 80,
+                        top: 56,
                         left: '10%',
                         width: '80%',
                         height: 4,

@@ -4,6 +4,8 @@ import {
     useCurrentFrame,
     interpolate,
     Easing,
+    Img,
+    staticFile,
 } from 'remotion';
 import { MaskedTextReveal } from '../animations/MaskedTextReveal';
 import { COLORS } from '../brand/colors';
@@ -200,10 +202,12 @@ const CollisionCenter: React.FC<{ startFrame: number }> = ({ startFrame }) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: 32,
                         filter: `drop-shadow(0 0 ${10 * glowPulse}px ${COLORS.accentPrimary})`,
                     }}>
-                        ⚡
+                        <Img
+                            src={staticFile('assets/logos/GenLayer_Logo_White_Cropped.png')}
+                            style={{ width: 56, height: 56, objectFit: 'contain' }}
+                        />
                     </div>
                 </div>
 

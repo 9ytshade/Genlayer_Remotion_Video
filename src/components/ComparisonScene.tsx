@@ -14,6 +14,7 @@ interface ComparisonSide {
     label: string;
     points: string[];
     color?: string;
+    icon?: string;
 }
 
 interface ComparisonSceneProps {
@@ -22,128 +23,162 @@ interface ComparisonSceneProps {
     right: ComparisonSide;
 }
 
-/**
- * Split-screen comparison: old/problem vs new/solution.
- * Animates left side first, then right side. Divider line in center.
- */
-export const ComparisonScene: React.FC<ComparisonSceneProps> = ({
-    heading,
-    left,
-    right,
-}) => {
+const ComparisonCard: React.FC<{
+    side: ComparisonSide;
+    color: string;
+    isRight: boolean;
+    startFrame: number;
+    pointDelay: number;
+}> = ({ side, color, isRight, startFrame, pointDelay }) => {
     const frame = useCurrentFrame();
 
-    const leftColor = left.color || COLORS.textMuted;
-    const rightColor = right.color || COLORS.accentPrimary;
-
-    // Divider
-    const dividerHeight = interpolate(frame, [20, 50], [0, 700], {
-        extrapolateLeft: 'clamp',
-        extrapolateRight: 'clamp',
-        easing: Easing.out(Easing.cubic),
+    const opacity = interpolate(frame, [startFrame, startFrame + 18], [0, 1], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic),
     });
-
-    // Side animations
-    const leftOpacity = interpolate(frame, [15, 35], [0, 1], {
-        extrapolateLeft: 'clamp',
-        extrapolateRight: 'clamp',
+    const translateX = interpolate(frame, [startFrame, startFrame + 18], [isRight ? 60 : -60, 0], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic),
     });
+    const glowPulse = isRight
+        ? interpolate(frame, [startFrame + 20, startFrame + 50, startFrame + 80], [0.4, 1, 0.4], {
+            extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.sin),
+          })
+        : 0;
 
-    const rightOpacity = interpolate(frame, [40, 60], [0, 1], {
-        extrapolateLeft: 'clamp',
-        extrapolateRight: 'clamp',
-    });
+    const bulletIcon = isRight ? '✓' : '✕';
+    const bulletColor = isRight ? color : `${COLORS.textMuted}80`;
 
-    const renderSide = (
-        side: ComparisonSide,
-        opacity: number,
-        color: string,
-        baseDelay: number
-    ) => (
+    return (
         <div
             style={{
                 flex: 1,
+                opacity,
+                transform: `translateX(${translateX}px)`,
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
-                padding: SPACING.xl,
-                opacity,
+                border: `2px solid ${color}${isRight ? '' : '50'}`,
+                borderRadius: 20,
+                overflow: 'hidden',
+                background: isRight
+                    ? `linear-gradient(135deg, ${color}15, ${color}05)`
+                    : 'linear-gradient(135deg, #0d0d0d, #111118)',
+                boxShadow: isRight ? `0 0 ${35 * glowPulse}px ${color}40` : 'none',
             }}
         >
+            {/* Card header bar */}
             <div
                 style={{
-                    fontFamily: FONTS.primary,
-                    fontSize: FONTS.sizes.h3,
-                    fontWeight: FONTS.weights.bold,
-                    color,
-                    marginBottom: SPACING.lg,
-                    letterSpacing: 1,
+                    padding: `${SPACING.lg}px ${SPACING.xl}px`,
+                    background: isRight ? `${color}25` : `${COLORS.textMuted}12`,
+                    borderBottom: `1px solid ${color}${isRight ? '50' : '25'}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: SPACING.md,
                 }}
             >
-                {side.label}
+                <div
+                    style={{
+                        width: 12,
+                        height: 12,
+                        borderRadius: '50%',
+                        background: isRight ? color : `${COLORS.textMuted}60`,
+                        boxShadow: isRight ? `0 0 8px ${color}` : 'none',
+                    }}
+                />
+                <div
+                    style={{
+                        fontFamily: FONTS.primary,
+                        fontSize: FONTS.sizes.h4,
+                        fontWeight: FONTS.weights.bold,
+                        color: isRight ? color : COLORS.textMuted,
+                        letterSpacing: 0.5,
+                    }}
+                >
+                    {side.label}
+                </div>
             </div>
-            {side.points.map((point, i) => {
-                const pointOpacity = interpolate(
-                    frame,
-                    [baseDelay + i * 8, baseDelay + i * 8 + 15],
-                    [0, 1],
-                    { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
-                );
-                const pointX = interpolate(
-                    frame,
-                    [baseDelay + i * 8, baseDelay + i * 8 + 15],
-                    [15, 0],
-                    {
-                        extrapolateLeft: 'clamp',
-                        extrapolateRight: 'clamp',
-                        easing: Easing.out(Easing.cubic),
-                    }
-                );
 
-                return (
-                    <div
-                        key={i}
-                        style={{
-                            fontFamily: FONTS.primary,
-                            fontSize: FONTS.sizes.body,
-                            color: COLORS.textSecondary,
-                            lineHeight: FONTS.lineHeights.relaxed,
-                            opacity: pointOpacity,
-                            transform: `translateX(${pointX}px)`,
-                            marginBottom: SPACING.sm,
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            gap: SPACING.sm,
-                        }}
-                    >
-                        <span
+            {/* Points */}
+            <div style={{ padding: `${SPACING.xl}px`, display: 'flex', flexDirection: 'column', gap: SPACING.md, flex: 1, justifyContent: 'center' }}>
+                {side.points.map((point, i) => {
+                    const pd = pointDelay + i * 8;
+                    const pOpacity = interpolate(frame, [pd, pd + 12], [0, 1], {
+                        extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+                    });
+                    const pX = interpolate(frame, [pd, pd + 12], [isRight ? 16 : -16, 0], {
+                        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic),
+                    });
+
+                    return (
+                        <div
+                            key={i}
                             style={{
-                                color,
-                                fontSize: FONTS.sizes.caption,
-                                marginTop: 3,
+                                opacity: pOpacity,
+                                transform: `translateX(${pX}px)`,
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                gap: SPACING.md,
+                                padding: `${SPACING.sm}px ${SPACING.md}px`,
+                                borderRadius: 10,
+                                background: isRight ? `${color}08` : 'transparent',
+                                border: isRight ? `1px solid ${color}20` : '1px solid transparent',
                             }}
                         >
-                            ●
-                        </span>
-                        {point}
-                    </div>
-                );
-            })}
+                            <span
+                                style={{
+                                    color: bulletColor,
+                                    fontFamily: FONTS.primary,
+                                    fontSize: FONTS.sizes.body,
+                                    fontWeight: FONTS.weights.bold,
+                                    flexShrink: 0,
+                                    lineHeight: 1.6,
+                                }}
+                            >
+                                {bulletIcon}
+                            </span>
+                            <div
+                                style={{
+                                    fontFamily: FONTS.primary,
+                                    fontSize: FONTS.sizes.body,
+                                    color: isRight ? COLORS.textPrimary : COLORS.textMuted,
+                                    lineHeight: 1.5,
+                                }}
+                            >
+                                {point}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
+};
+
+export const ComparisonScene: React.FC<ComparisonSceneProps> = ({ heading, left, right }) => {
+    const frame = useCurrentFrame();
+    const leftColor = left.color || COLORS.textMuted;
+    const rightColor = right.color || COLORS.accentPrimary;
+
+    // VS badge
+    const vsOpacity = interpolate(frame, [28, 40], [0, 1], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(1.5)),
+    });
+    const vsScale = interpolate(frame, [28, 40], [0.5, 1], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(1.5)),
+    });
 
     return (
         <AbsoluteFill
             style={{
                 padding: LAYOUT.contentPadding,
+                paddingTop: 80,
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
+                gap: SPACING.xl,
             }}
         >
-            {/* Heading */}
             {heading && (
-                <div style={{ marginBottom: SPACING.xl, textAlign: 'center' }}>
+                <div style={{ textAlign: 'center' }}>
                     <MaskedTextReveal
                         text={heading}
                         startFrame={0}
@@ -155,22 +190,43 @@ export const ComparisonScene: React.FC<ComparisonSceneProps> = ({
                 </div>
             )}
 
-            {/* Comparison */}
-            <div style={{ display: 'flex', alignItems: 'stretch' }}>
-                {renderSide(left, leftOpacity, leftColor, 25)}
+            <div style={{ display: 'flex', alignItems: 'stretch', gap: 0, flex: 1 }}>
+                <ComparisonCard side={left} color={leftColor} isRight={false} startFrame={10} pointDelay={28} />
 
-                {/* Divider */}
+                {/* VS Center Badge */}
                 <div
                     style={{
-                        width: 2,
-                        background: `linear-gradient(180deg, transparent, ${COLORS.accentPrimary}40, transparent)`,
-                        height: dividerHeight,
-                        alignSelf: 'center',
+                        opacity: vsOpacity,
+                        transform: `scale(${vsScale})`,
                         flexShrink: 0,
+                        width: 80,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                     }}
-                />
+                >
+                    <div
+                        style={{
+                            width: 60,
+                            height: 60,
+                            borderRadius: '50%',
+                            background: `linear-gradient(135deg, ${leftColor}30, ${rightColor}30)`,
+                            border: `2px solid ${rightColor}60`,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontFamily: FONTS.primary,
+                            fontSize: 22,
+                            fontWeight: 900,
+                            color: COLORS.textPrimary,
+                            letterSpacing: -1,
+                        }}
+                    >
+                        VS
+                    </div>
+                </div>
 
-                {renderSide(right, rightOpacity, rightColor, 50)}
+                <ComparisonCard side={right} color={rightColor} isRight startFrame={22} pointDelay={45} />
             </div>
         </AbsoluteFill>
     );

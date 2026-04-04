@@ -29,39 +29,51 @@ export const Video18_Roadmap: React.FC = () => {
                         ),
                     },
                     {
-                        id: 'phases',
-                        durationInFrames: s(30),
+                        id: 'phases-1',
+                        durationInFrames: s(22),
                         component: (
                             <TimelineScene
-                                heading="The Road to Mainnet"
-                                accentColor={COLORS.accentPrimary}
+                                heading="Where We Are"
+                                accentColor={COLORS.accentSecondary}
                                 steps={[
                                     {
-                                        label: 'Phase 1',
-                                        title: 'Asimov - Local Testnet',
+                                        label: 'Phase 1 — Complete',
+                                        title: 'Asimov · Local Testnet',
                                         description: 'Developers run a local validator and test Intelligent Contracts. Focus: GenVM stability and basic Python execution.',
                                         color: COLORS.accentTertiary,
                                         status: 'done',
                                     },
                                     {
-                                        label: 'Phase 2',
-                                        title: 'Bradbury - Public Testnet',
+                                        label: 'Phase 2 — Live Now 🔴',
+                                        title: 'Bradbury · Public Testnet',
                                         description: 'A live network where anyone can deploy. Focus: Consensus mechanism, networking, and security auditing.',
                                         color: COLORS.accentSecondary,
                                         status: 'active',
                                     },
+                                ]}
+                            />
+                        ),
+                    },
+                    {
+                        id: 'phases-2',
+                        durationInFrames: s(22),
+                        component: (
+                            <TimelineScene
+                                heading="Where We're Going"
+                                accentColor={COLORS.accentPrimary}
+                                steps={[
                                     {
-                                        label: 'Phase 3',
-                                        title: 'Clarke - Incentivized Testnet',
+                                        label: 'Phase 3 — Coming Soon',
+                                        title: 'Clarke · Incentivized Testnet',
                                         description: 'The final rehearsal before launch. Focus: Stress testing, validator onboarding, and economic game theory.',
                                         color: COLORS.accentPrimary,
                                         status: 'upcoming',
                                     },
                                     {
                                         label: 'The Goal',
-                                        title: 'Mainnet Launch',
-                                        description: 'The Genesis of the Intelligent Blockchain. Open to all builders.',
-                                        color: COLORS.accentPrimary,
+                                        title: 'Mainnet Launch 🚀',
+                                        description: 'The Genesis of the Intelligent Blockchain. Open to all builders. The future is permissionless.',
+                                        color: COLORS.accentPrimaryLight,
                                         status: 'upcoming',
                                     },
                                 ]}
