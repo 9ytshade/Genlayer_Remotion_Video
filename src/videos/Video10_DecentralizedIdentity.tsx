@@ -3,6 +3,7 @@ import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
 import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { IdentityGapScene } from '../components/IdentityGapScene';
 import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
@@ -31,21 +32,8 @@ export const Video10_DecentralizedIdentity: React.FC = () => {
                     },
                     {
                         id: 'intro',
-                        durationInFrames: s(15),
-                        component: (
-                            <ContentSection
-                                heading="The Identity Gap"
-                                bodyLines={[
-                                    'In crypto, you are just a wallet address (0x123...).',
-                                    'But in the real world, you are a person with history, social media presence, and reputation.',
-                                    'How do we bridge this gap without giving up privacy?',
-                                ]}
-                                highlights={[
-                                    { word: 'wallet address', color: COLORS.textMuted },
-                                    { word: 'reputation', color: COLORS.accentPrimary },
-                                ]}
-                            />
-                        ),
+                        durationInFrames: s(17),
+                        component: <IdentityGapScene />,
                     },
                     {
                         id: 'concept',

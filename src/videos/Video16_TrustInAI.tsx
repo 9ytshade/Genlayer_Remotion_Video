@@ -3,6 +3,7 @@ import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
 import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { ValidatorConsensusScene } from '../components/ValidatorConsensusScene';
 import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
@@ -58,22 +59,8 @@ export const Video16_TrustInAI: React.FC = () => {
                     },
                     {
                         id: 'solution',
-                        durationInFrames: s(15),
-                        component: (
-                            <ContentSection
-                                heading="Anchoring Truth On-Chain"
-                                bodyLines={[
-                                    'GenLayer uses consensus to anchor truth on-chain.',
-                                    'When multiple validators agree on a fact (like a news event), it becomes immutable.',
-                                    'We are building a ledger of verified reality that AI agents can rely on.',
-                                ]}
-                                highlights={[
-                                    { word: 'anchor truth', color: COLORS.accentPrimary },
-                                    { word: 'verified reality', color: COLORS.accentTertiary },
-                                    { word: 'immutable', color: COLORS.accentSecondary },
-                                ]}
-                            />
-                        ),
+                        durationInFrames: s(18),
+                        component: <ValidatorConsensusScene />,
                     },
                     {
                         id: 'humanity',

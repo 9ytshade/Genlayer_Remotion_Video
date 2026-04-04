@@ -47,10 +47,11 @@ export const TimelineScene: React.FC<TimelineSceneProps> = ({
         <AbsoluteFill
             style={{
                 padding: LAYOUT.contentPadding,
+                paddingTop: 80,
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
-                gap: SPACING.xxl,
+                justifyContent: 'flex-start',
+                gap: SPACING.lg,
             }}
         >
             {/* Heading */}
@@ -68,11 +69,11 @@ export const TimelineScene: React.FC<TimelineSceneProps> = ({
                 <div
                     style={{
                         position: 'absolute',
-                        left: 28,
-                        top: 32,
+                        left: 22,
+                        top: 24,
                         width: 4,
                         borderRadius: 2,
-                        height: `calc(${steps.length - 1} * 130px)`,
+                        height: `calc(${steps.length - 1} * 104px)`,
                         background: `${accentColor}20`,
                     }}
                 />
@@ -80,11 +81,11 @@ export const TimelineScene: React.FC<TimelineSceneProps> = ({
                 <div
                     style={{
                         position: 'absolute',
-                        left: 28,
-                        top: 32,
+                        left: 22,
+                        top: 24,
                         width: 4,
                         borderRadius: 2,
-                        height: `calc(${lineProgress} * ${(steps.length - 1) * 130}px)`,
+                        height: `calc(${lineProgress} * ${(steps.length - 1) * 104}px)`,
                         background: `linear-gradient(180deg, ${accentColor}, ${accentColor}80)`,
                         boxShadow: `0 0 12px ${accentColor}`,
                         transition: 'height 0.1s',
@@ -118,16 +119,16 @@ export const TimelineScene: React.FC<TimelineSceneProps> = ({
                                 gap: SPACING.xl,
                                 opacity,
                                 transform: `translateX(${translateX}px)`,
-                                marginBottom: i < steps.length - 1 ? SPACING.xl : 0,
-                                minHeight: 100,
+                                marginBottom: i < steps.length - 1 ? SPACING.md : 0,
+                                minHeight: 80,
                             }}
                         >
                             {/* Node */}
                             <div style={{ position: 'relative', flexShrink: 0, marginTop: 4 }}>
                                 <div
                                     style={{
-                                        width: 60,
-                                        height: 60,
+                                        width: 48,
+                                        height: 48,
                                         borderRadius: '50%',
                                         background: isDone
                                             ? stepColor
@@ -172,7 +173,7 @@ export const TimelineScene: React.FC<TimelineSceneProps> = ({
                                 <div
                                     style={{
                                         fontFamily: FONTS.primary,
-                                        fontSize: FONTS.sizes.h3,
+                                        fontSize: FONTS.sizes.h4,
                                         fontWeight: FONTS.weights.bold,
                                         color: COLORS.textPrimary,
                                         marginBottom: SPACING.sm,

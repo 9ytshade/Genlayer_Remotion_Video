@@ -3,6 +3,7 @@ import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
 import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { LanguageWarsScene } from '../components/LanguageWarsScene';
 import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
@@ -31,21 +32,8 @@ export const Video13_PythonCode: React.FC = () => {
                     },
                     {
                         id: 'intro',
-                        durationInFrames: s(12),
-                        component: (
-                            <ContentSection
-                                heading="Solidity is Hard"
-                                bodyLines={[
-                                    'Learning Solidity or Rust is a huge barrier for new crypto developers.',
-                                    'It also forces you to reinvent the wheel for basic tasks.',
-                                    'GenLayer changes this by supporting the world\'s most popular language.',
-                                ]}
-                                highlights={[
-                                    { word: 'huge barrier', color: COLORS.textMuted },
-                                    { word: 'world\'s most popular language', color: COLORS.accentSecondary },
-                                ]}
-                            />
-                        ),
+                        durationInFrames: s(18),
+                        component: <LanguageWarsScene />,
                     },
                     {
                         id: 'concept',

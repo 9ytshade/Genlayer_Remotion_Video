@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { CollisionScene } from '../components/CollisionScene';
 import { IconGridScene } from '../components/IconGridScene';
 import { StatCounterScene } from '../components/StatCounterScene';
 import { MochiScene } from '../components/MochiScene';
@@ -31,17 +32,8 @@ export const Video15_FutureOfAI: React.FC = () => {
                     },
                     {
                         id: 'intro',
-                        durationInFrames: s(12),
-                        component: (
-                            <IconGridScene
-                                heading="Two Revolutions Collide"
-                                columns={2}
-                                items={[
-                                    { emoji: '🧠', label: 'AI Revolution', sublabel: 'The revolution of intelligence. Powerful but needs trust.', color: COLORS.accentSecondary },
-                                    { emoji: '🔗', label: 'Crypto Revolution', sublabel: 'The revolution of trust. Trustless but needs intelligence.', color: COLORS.accentPrimary },
-                                ]}
-                            />
-                        ),
+                        durationInFrames: s(16),
+                        component: <CollisionScene />,
                     },
                     {
                         id: 'concept',
