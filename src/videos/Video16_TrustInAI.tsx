@@ -3,6 +3,7 @@ import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
 import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -32,16 +33,14 @@ export const Video16_TrustInAI: React.FC = () => {
                         id: 'problem',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="The Deepfake Era"
-                                bodyLines={[
-                                    'As AI gets better, truth gets harder to verify.',
-                                    'Deepfakes, fake news, and AI spam are flooding the internet.',
-                                    'How do we know what is real? How do we know who is human?',
-                                ]}
-                                highlights={[
-                                    { word: 'Deepfakes', color: COLORS.textMuted },
-                                    { word: 'truth', color: COLORS.accentPrimary },
+                                columns={3}
+                                accentColor={COLORS.textMuted}
+                                items={[
+                                    { emoji: '🎭', label: 'Deepfakes', sublabel: 'AI-generated video of anyone saying anything', color: COLORS.textMuted },
+                                    { emoji: '📰', label: 'Fake News', sublabel: 'AI-written articles indistinguishable from real', color: COLORS.textMuted },
+                                    { emoji: '🤖', label: 'AI Spam Bots', sublabel: 'Flooding the internet with synthetic content', color: COLORS.textMuted },
                                 ]}
                             />
                         ),
@@ -62,7 +61,7 @@ export const Video16_TrustInAI: React.FC = () => {
                         durationInFrames: s(15),
                         component: (
                             <ContentSection
-                                heading="Anchoring Truth"
+                                heading="Anchoring Truth On-Chain"
                                 bodyLines={[
                                     'GenLayer uses consensus to anchor truth on-chain.',
                                     'When multiple validators agree on a fact (like a news event), it becomes immutable.',
@@ -71,6 +70,7 @@ export const Video16_TrustInAI: React.FC = () => {
                                 highlights={[
                                     { word: 'anchor truth', color: COLORS.accentPrimary },
                                     { word: 'verified reality', color: COLORS.accentTertiary },
+                                    { word: 'immutable', color: COLORS.accentSecondary },
                                 ]}
                             />
                         ),
@@ -79,15 +79,14 @@ export const Video16_TrustInAI: React.FC = () => {
                         id: 'humanity',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="Proving Humanity"
-                                bodyLines={[
-                                    'Through decentralized identity and social verification, we can prove humanness without centralized KYC.',
-                                    'This preserves the "web of trust" in a digital world overrun by bots.',
-                                ]}
-                                highlights={[
-                                    { word: 'prove humanness', color: COLORS.accentSecondary },
-                                    { word: 'web of trust', color: COLORS.accentPrimary },
+                                columns={3}
+                                accentColor={COLORS.accentSecondary}
+                                items={[
+                                    { emoji: '🧑', label: 'Prove You\'re Human', sublabel: 'Decentralized identity — no centralized KYC', color: COLORS.accentSecondary },
+                                    { emoji: '🌐', label: 'Web of Trust', sublabel: 'Social graph on-chain, Bot-proof communities', color: COLORS.accentPrimary },
+                                    { emoji: '🔐', label: 'Cryptographic Proof', sublabel: 'The only anchor in a world of synthetic media', color: COLORS.accentTertiary },
                                 ]}
                             />
                         ),

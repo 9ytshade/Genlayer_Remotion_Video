@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
-import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -32,63 +32,42 @@ export const Video19_Partnerships: React.FC = () => {
                         id: 'intro',
                         durationInFrames: s(10),
                         component: (
-                            <ContentSection
-                                heading="A Collaborative Future"
-                                bodyLines={[
-                                    'We aren\'t building alone. GenLayer is partnering with the best infrastructure in crypto and AI.',
-                                ]}
-                                highlights={[
-                                    { word: 'partnering', color: COLORS.accentPrimary },
-                                ]}
-                            />
-                        ),
-                    },
-                    {
-                        id: 'partners-1',
-                        durationInFrames: s(15),
-                        component: (
-                            <ContentSection
-                                heading="Infrastructure Partners"
-                                bodyLines={[
-                                    'ZKsync: Scaling our execution layer.',
-                                    'Caldera: Rollup-as-a-service infrastructure.',
-                                    'Atoma: Network availability and data checks.',
-                                ]}
-                                highlights={[
-                                    { word: 'ZKsync', color: COLORS.accentPrimary },
-                                    { word: 'Caldera', color: COLORS.accentSecondary },
-                                    { word: 'Atoma', color: COLORS.accentTertiary },
-                                ]}
-                            />
-                        ),
-                    },
-                    {
-                        id: 'partners-2',
-                        durationInFrames: s(15),
-                        component: (
-                            <ContentSection
-                                heading="AI Partners"
-                                bodyLines={[
-                                    'io.net: The decentralized compute network for training models.',
-                                    'LibertAI: Open source AI agents and tooling.',
-                                    'Gaia: Decentralized AI knowledge bases.',
-                                ]}
-                                highlights={[
-                                    { word: 'io.net', color: COLORS.accentPrimary },
-                                    { word: 'LibertAI', color: COLORS.accentSecondary },
-                                    { word: 'Gaia', color: COLORS.accentTertiary },
-                                ]}
-                            />
-                        ),
-                    },
-                    {
-                        id: 'concept',
-                        durationInFrames: s(8),
-                        component: (
                             <ConceptReveal
                                 term="The AI Stack"
-                                subtitle="GenLayer is the trust layer. Our partners provide compute, data, and scale."
+                                subtitle="GenLayer is the trust layer. Partners provide compute, data, and scale."
                                 accentColor={COLORS.accentSecondary}
+                            />
+                        ),
+                    },
+                    {
+                        id: 'partners-infra',
+                        durationInFrames: s(18),
+                        component: (
+                            <IconGridScene
+                                heading="Infrastructure Partners"
+                                columns={3}
+                                accentColor={COLORS.accentPrimary}
+                                items={[
+                                    { emoji: '⚡', label: 'ZKsync', sublabel: 'Scaling our execution layer with ZK technology', color: COLORS.accentPrimary },
+                                    { emoji: '🔄', label: 'Caldera', sublabel: 'Rollup-as-a-service infrastructure', color: COLORS.accentSecondary },
+                                    { emoji: '📡', label: 'Atoma', sublabel: 'Network availability and data verification', color: COLORS.accentTertiary },
+                                ]}
+                            />
+                        ),
+                    },
+                    {
+                        id: 'partners-ai',
+                        durationInFrames: s(18),
+                        component: (
+                            <IconGridScene
+                                heading="AI Partners"
+                                columns={3}
+                                accentColor={COLORS.accentTertiary}
+                                items={[
+                                    { emoji: '🖥️', label: 'io.net', sublabel: 'Decentralized compute for training models', color: COLORS.accentPrimary },
+                                    { emoji: '🗽', label: 'LibertAI', sublabel: 'Open source AI agents and developer tooling', color: COLORS.accentSecondary },
+                                    { emoji: '🧠', label: 'Gaia', sublabel: 'Decentralized AI knowledge bases', color: COLORS.accentTertiary },
+                                ]}
                             />
                         ),
                     },

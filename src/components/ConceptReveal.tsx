@@ -225,7 +225,7 @@ export const ConceptReveal: React.FC<ConceptRevealProps> = ({
                                     key={i}
                                     style={{
                                         backgroundColor: accentColor, // Use accent color background
-                                        color: COLORS.background, // Contrast text
+                                        color: COLORS.bgPrimary, // Contrast text
                                         padding: `${SPACING.sm}px ${SPACING.lg}px`,
                                         borderRadius: 999, // Pill shape
                                         fontSize: FONTS.sizes.h3,

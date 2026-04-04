@@ -1,8 +1,9 @@
 import React from 'react';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
-import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { IconGridScene } from '../components/IconGridScene';
+import { StatCounterScene } from '../components/StatCounterScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -32,16 +33,12 @@ export const Video15_FutureOfAI: React.FC = () => {
                         id: 'intro',
                         durationInFrames: s(12),
                         component: (
-                            <ContentSection
-                                heading="Two Revolutions"
-                                bodyLines={[
-                                    'AI is the revolution of intelligence. Crypto is the revolution of trust.',
-                                    'Separately, they are powerful. Together, they are unstoppable.',
-                                    'GenLayer is the bridge that connects these two worlds.',
-                                ]}
-                                highlights={[
-                                    { word: 'revolution of intelligence', color: COLORS.accentSecondary },
-                                    { word: 'revolution of trust', color: COLORS.accentPrimary },
+                            <IconGridScene
+                                heading="Two Revolutions Collide"
+                                columns={2}
+                                items={[
+                                    { emoji: '🧠', label: 'AI Revolution', sublabel: 'The revolution of intelligence. Powerful but needs trust.', color: COLORS.accentSecondary },
+                                    { emoji: '🔗', label: 'Crypto Revolution', sublabel: 'The revolution of trust. Trustless but needs intelligence.', color: COLORS.accentPrimary },
                                 ]}
                             />
                         ),
@@ -61,17 +58,18 @@ export const Video15_FutureOfAI: React.FC = () => {
                         id: 'vision',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <StatCounterScene
                                 heading="An Economy for Agents"
-                                bodyLines={[
-                                    'In the future, most internet traffic will be AI agents interacting with other agents.',
-                                    'They need a neutral ground to transact. They can\'t use bank accounts.',
-                                    'They need a trustless infrastructure to settle agreements.',
+                                accentColor={COLORS.accentSecondary}
+                                stats={[
+                                    {
+                                        value: '$2T+',
+                                        label: 'AI Agent Economy by 2030',
+                                        sublabel: 'Most internet traffic will be AI agents transacting with other agents',
+                                        color: COLORS.accentSecondary,
+                                    },
                                 ]}
-                                highlights={[
-                                    { word: 'AI agents', color: COLORS.accentSecondary },
-                                    { word: 'neutral ground', color: COLORS.accentPrimary },
-                                ]}
+                                bodyText="They need neutral ground to transact. They can't use bank accounts. They need GenLayer."
                             />
                         ),
                     },
@@ -79,16 +77,14 @@ export const Video15_FutureOfAI: React.FC = () => {
                         id: 'infrastructure',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="The Substrate for AI"
-                                bodyLines={[
-                                    'GenLayer provides the legal system and the bank for this new AI economy.',
-                                    'Intelligent Contracts serve as the binding agreements between autonomous agents.',
-                                    'This enables a machine-to-machine economy worth trillions.',
-                                ]}
-                                highlights={[
-                                    { word: 'legal system', color: COLORS.accentPrimary },
-                                    { word: 'bank', color: COLORS.accentTertiary },
+                                columns={3}
+                                accentColor={COLORS.accentPrimary}
+                                items={[
+                                    { emoji: '⚖️', label: 'The Legal System', sublabel: 'Binding agreements between autonomous agents', color: COLORS.accentPrimary },
+                                    { emoji: '🏦', label: 'The Bank', sublabel: 'Trustless settlement without intermediaries', color: COLORS.accentTertiary },
+                                    { emoji: '🤝', label: 'The Marketplace', sublabel: 'Machine-to-machine economy worth trillions', color: COLORS.accentSecondary },
                                 ]}
                             />
                         ),

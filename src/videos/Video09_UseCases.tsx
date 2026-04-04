@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
-import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -29,25 +29,35 @@ export const Video09_UseCases: React.FC = () => {
                         ),
                     },
                     {
-                        id: 'intro',
-                        durationInFrames: s(10),
+                        id: 'intro-grid',
+                        durationInFrames: s(15),
                         component: (
-                            <ContentSection
-                                heading="The Next Generation"
-                                bodyLines={[
-                                    'With Intelligent Contracts, we can build applications that were previously impossible.',
-                                    'Here are three ways GenLayer will change the game.',
+                            <IconGridScene
+                                heading="The Next Generation of dApps"
+                                columns={3}
+                                items={[
+                                    {
+                                        emoji: '🤖',
+                                        label: 'AI-Resolved Markets',
+                                        sublabel: 'Prediction markets settled by reading the web',
+                                        color: COLORS.accentSecondary,
+                                    },
+                                    {
+                                        emoji: '🌧️',
+                                        label: 'Parametric Insurance',
+                                        sublabel: 'Payouts triggered by real-world data',
+                                        color: COLORS.accentTertiary,
+                                    },
+                                    {
+                                        emoji: '🏛️',
+                                        label: 'Autonomous DAOs',
+                                        sublabel: 'Governance that never sleeps',
+                                        color: COLORS.accentPrimary,
+                                    },
                                 ]}
-                                highlights={[
-                                    { word: 'change the game', color: COLORS.accentPrimary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video09-Scene02.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
-                    // Use Case 1: Prediction Markets
                     {
                         id: 'prediction-mkts-concept',
                         durationInFrames: s(8),
@@ -63,24 +73,19 @@ export const Video09_UseCases: React.FC = () => {
                         id: 'prediction-mkts-detail',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="Automated Resolution"
-                                bodyLines={[
-                                    'Current prediction markets rely on slow, manual resolution or centralized oracles.',
-                                    'On GenLayer, the contract reads the news itself to determine the winner.',
-                                    '"Who won the election?" — The contract checks AP, Reuters, and BBC instantly.',
+                                columns={2}
+                                accentColor={COLORS.accentSecondary}
+                                items={[
+                                    { emoji: '📰', label: 'Reads the news', sublabel: 'AP, Reuters, BBC — checked instantly', color: COLORS.accentSecondary },
+                                    { emoji: '⚡', label: 'Instant Settlement', sublabel: 'No manual review process', color: COLORS.accentPrimary },
+                                    { emoji: '🔗', label: 'On-chain Truth', sublabel: 'Verified by validator consensus', color: COLORS.accentTertiary },
+                                    { emoji: '🚫', label: 'No Oracles Needed', sublabel: 'Contract reads the web directly', color: COLORS.accentSecondary },
                                 ]}
-                                highlights={[
-                                    { word: 'reads the news', color: COLORS.accentPrimary },
-                                    { word: 'instantly', color: COLORS.accentTertiary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video09-Scene04.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
-                    // Use Case 2: Parametric Insurance
                     {
                         id: 'insurance-concept',
                         durationInFrames: s(8),
@@ -96,23 +101,19 @@ export const Video09_UseCases: React.FC = () => {
                         id: 'insurance-detail',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="Weather-Based Payouts"
-                                bodyLines={[
-                                    'Farmers can buy drought insurance that pays out automatically if rainfall covers below a threshold.',
-                                    'The contract checks NOAA weather data daily. No claims process. No paperwork.',
+                                columns={2}
+                                accentColor={COLORS.accentTertiary}
+                                items={[
+                                    { emoji: '🌾', label: 'Drought Insurance', sublabel: 'Farmers protected automatically', color: COLORS.accentTertiary },
+                                    { emoji: '📡', label: 'NOAA Data', sublabel: 'Contract checks weather daily', color: COLORS.accentPrimary },
+                                    { emoji: '📋', label: 'No Paperwork', sublabel: 'Zero claims process needed', color: COLORS.accentSecondary },
+                                    { emoji: '💰', label: 'Auto Payout', sublabel: 'Below threshold = instant payment', color: COLORS.accentTertiary },
                                 ]}
-                                highlights={[
-                                    { word: 'pays out automatically', color: COLORS.accentPrimary },
-                                    { word: 'No paperwork', color: COLORS.accentSecondary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video09-Scene06.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
-                    // Use Case 3: AI DAOs
                     {
                         id: 'daos-concept',
                         durationInFrames: s(8),
@@ -128,20 +129,15 @@ export const Video09_UseCases: React.FC = () => {
                         id: 'daos-detail',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="Autonomous Management"
-                                bodyLines={[
-                                    'A DAO that manages its own treasury based on market conditions.',
-                                    'It can read proposals in natural language and vote based on its constitution.',
-                                    'True autonomous organizations, not just chat rooms with a bank account.',
+                                columns={3}
+                                accentColor={COLORS.accentPrimary}
+                                items={[
+                                    { emoji: '📜', label: 'AI Constitution', sublabel: 'Reads proposals in any language', color: COLORS.accentPrimary },
+                                    { emoji: '✅', label: 'Auto-Votes', sublabel: 'Enforces rules 24/7', color: COLORS.accentTertiary },
+                                    { emoji: '🏦', label: 'Treasury AI', sublabel: 'Manages funds by market conditions', color: COLORS.accentSecondary },
                                 ]}
-                                highlights={[
-                                    { word: 'read proposals', color: COLORS.accentTertiary },
-                                    { word: 'True autonomous', color: COLORS.accentPrimary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video09-Scene08.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

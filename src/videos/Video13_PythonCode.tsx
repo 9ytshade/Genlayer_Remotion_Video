@@ -3,6 +3,7 @@ import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
 import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -41,11 +42,8 @@ export const Video13_PythonCode: React.FC = () => {
                                 ]}
                                 highlights={[
                                     { word: 'huge barrier', color: COLORS.textMuted },
-                                    { word: 're-invent the wheel', color: COLORS.accentSecondary },
+                                    { word: 'world\'s most popular language', color: COLORS.accentSecondary },
                                 ]}
-                                imagePath="assets/mochi/Mochi-Video13-Scene02.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -64,16 +62,14 @@ export const Video13_PythonCode: React.FC = () => {
                         id: 'features',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="Supercharged Development"
-                                bodyLines={[
-                                    'Import standard libraries. Use familiar syntax.',
-                                    'But the real magic is combining code with natural language prompts.',
-                                    'Mix deterministic logic (`if x > 10`) with AI logic (`if sentiment is positive`).',
-                                ]}
-                                highlights={[
-                                    { word: 'familiar syntax', color: COLORS.accentPrimary },
-                                    { word: 'Mix deterministic logic', color: COLORS.accentSecondary },
+                                columns={3}
+                                accentColor={COLORS.accentTertiary}
+                                items={[
+                                    { emoji: '🐍', label: 'Python Native', sublabel: 'Import standard libraries. Use familiar syntax.', color: COLORS.accentTertiary },
+                                    { emoji: '🤖', label: 'AI Prompts in Code', sublabel: 'Mix `if x > 10` with `if sentiment is positive`', color: COLORS.accentPrimary },
+                                    { emoji: '🌐', label: 'Web Access Built-in', sublabel: 'Call any URL directly from your contract', color: COLORS.accentSecondary },
                                 ]}
                             />
                         ),
@@ -82,16 +78,14 @@ export const Video13_PythonCode: React.FC = () => {
                         id: 'simulator',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="GenLayer Simulator"
-                                bodyLines={[
-                                    'Test your Intelligent Contracts locally before deploying.',
-                                    'Our simulator mocks the internet and AI responses.',
-                                    'Rapid iteration cycle: Code → Simulate → Deploy.',
-                                ]}
-                                highlights={[
-                                    { word: 'Test', color: COLORS.accentPrimary },
-                                    { word: 'Simulator', color: COLORS.accentTertiary },
+                                columns={3}
+                                accentColor={COLORS.accentPrimary}
+                                items={[
+                                    { emoji: '🧪', label: 'Test Locally', sublabel: 'Run contracts before deploying to network', color: COLORS.accentPrimary },
+                                    { emoji: '🎭', label: 'Mock AI Responses', sublabel: 'Simulate LLM outputs deterministically', color: COLORS.accentTertiary },
+                                    { emoji: '🔄', label: 'Code → Simulate → Deploy', sublabel: 'Rapid iteration cycle with instant feedback', color: COLORS.accentSecondary },
                                 ]}
                             />
                         ),

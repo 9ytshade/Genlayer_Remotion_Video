@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
-import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { TimelineScene } from '../components/TimelineScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -29,52 +29,41 @@ export const Video18_Roadmap: React.FC = () => {
                         ),
                     },
                     {
-                        id: 'phase-1',
-                        durationInFrames: s(12),
+                        id: 'phases',
+                        durationInFrames: s(30),
                         component: (
-                            <ContentSection
-                                heading="Phase 1: Asimov"
-                                bodyLines={[
-                                    'The first local testnet. Developers can run a local validator and test Intelligent Contracts.',
-                                    'Focus: GenVM stability and basic Python execution.',
-                                ]}
-                                highlights={[
-                                    { word: 'Asimov', color: COLORS.accentTertiary },
-                                    { word: 'local validator', color: COLORS.accentSecondary },
-                                ]}
-                            />
-                        ),
-                    },
-                    {
-                        id: 'phase-2',
-                        durationInFrames: s(12),
-                        component: (
-                            <ContentSection
-                                heading="Phase 2: Bradbury"
-                                bodyLines={[
-                                    'Public Testnet. A live network where anyone can deploy.',
-                                    'Focus: Consensus mechanism, networking, and security auditing.',
-                                ]}
-                                highlights={[
-                                    { word: 'Bradbury', color: COLORS.accentSecondary },
-                                    { word: 'Public Testnet', color: COLORS.accentPrimary },
-                                ]}
-                            />
-                        ),
-                    },
-                    {
-                        id: 'phase-3',
-                        durationInFrames: s(12),
-                        component: (
-                            <ContentSection
-                                heading="Phase 3: Clarke"
-                                bodyLines={[
-                                    'Incentivized Testnet. The final rehearsal before launch.',
-                                    'Focus: Stress testing, validator onboarding, and economic game theory.',
-                                ]}
-                                highlights={[
-                                    { word: 'Clarke', color: COLORS.accentPrimary },
-                                    { word: 'Incentivized', color: COLORS.accentTertiary },
+                            <TimelineScene
+                                heading="The Road to Mainnet"
+                                accentColor={COLORS.accentPrimary}
+                                steps={[
+                                    {
+                                        label: 'Phase 1',
+                                        title: 'Asimov - Local Testnet',
+                                        description: 'Developers run a local validator and test Intelligent Contracts. Focus: GenVM stability and basic Python execution.',
+                                        color: COLORS.accentTertiary,
+                                        status: 'done',
+                                    },
+                                    {
+                                        label: 'Phase 2',
+                                        title: 'Bradbury - Public Testnet',
+                                        description: 'A live network where anyone can deploy. Focus: Consensus mechanism, networking, and security auditing.',
+                                        color: COLORS.accentSecondary,
+                                        status: 'active',
+                                    },
+                                    {
+                                        label: 'Phase 3',
+                                        title: 'Clarke - Incentivized Testnet',
+                                        description: 'The final rehearsal before launch. Focus: Stress testing, validator onboarding, and economic game theory.',
+                                        color: COLORS.accentPrimary,
+                                        status: 'upcoming',
+                                    },
+                                    {
+                                        label: 'The Goal',
+                                        title: 'Mainnet Launch',
+                                        description: 'The Genesis of the Intelligent Blockchain. Open to all builders.',
+                                        color: COLORS.accentPrimary,
+                                        status: 'upcoming',
+                                    },
                                 ]}
                             />
                         ),

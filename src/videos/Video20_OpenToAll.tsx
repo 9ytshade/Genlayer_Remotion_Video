@@ -1,14 +1,76 @@
 import React from 'react';
+import {
+    AbsoluteFill,
+    useCurrentFrame,
+    interpolate,
+    Easing,
+} from 'remotion';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
-import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
-import { MochiScene } from '../components/MochiScene';
+import { IconGridScene } from '../components/IconGridScene';
+import { StatCounterScene } from '../components/StatCounterScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
 import { COLORS } from '../brand/colors';
+import { FONTS } from '../brand/fonts';
 import { s } from '../brand/tokens';
 import { useEnergyFactor } from '../animations/EnergyBuild';
+
+/** Full-screen cinematic text statement — used for the final video */
+const CinematicStatement: React.FC<{ lines: string[]; accentLine?: number }> = ({
+    lines,
+    accentLine = 0,
+}) => {
+    const frame = useCurrentFrame();
+    return (
+        <AbsoluteFill
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '80px 120px',
+                gap: 32,
+                textAlign: 'center',
+            }}
+        >
+            {lines.map((line, i) => {
+                const delay = i * 18;
+                const opacity = interpolate(frame, [delay, delay + 20], [0, 1], {
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                    easing: Easing.out(Easing.cubic),
+                });
+                const translateY = interpolate(frame, [delay, delay + 20], [30, 0], {
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                    easing: Easing.out(Easing.cubic),
+                });
+                const isAccent = i === accentLine;
+                return (
+                    <div
+                        key={i}
+                        style={{
+                            opacity,
+                            transform: `translateY(${translateY}px)`,
+                            fontFamily: FONTS.primary,
+                            fontSize: isAccent ? 72 : 48,
+                            fontWeight: isAccent ? 900 : FONTS.weights.regular,
+                            color: isAccent ? COLORS.accentPrimary : COLORS.textSecondary,
+                            lineHeight: 1.2,
+                            textShadow: isAccent
+                                ? `0 0 60px ${COLORS.accentPrimary}60, 0 0 120px ${COLORS.accentPrimary}30`
+                                : 'none',
+                        }}
+                    >
+                        {line}
+                    </div>
+                );
+            })}
+        </AbsoluteFill>
+    );
+};
 
 export const Video20_OpenToAll: React.FC = () => {
     const energy = useEnergyFactor(s(120));
@@ -29,19 +91,16 @@ export const Video20_OpenToAll: React.FC = () => {
                         ),
                     },
                     {
-                        id: 'intro',
+                        id: 'cinematic-1',
                         durationInFrames: s(12),
                         component: (
-                            <ContentSection
-                                heading="Not Just Another L1"
-                                bodyLines={[
-                                    'GenLayer isn\'t an island. It\'s an intelligence service for the entire crypto ecosystem.',
-                                    'We want to export our capabilities to Ethereum, Solana, and beyond.',
+                            <CinematicStatement
+                                lines={[
+                                    'GenLayer isn\'t just another L1.',
+                                    'It\'s an intelligence service',
+                                    'for the entire crypto ecosystem.',
                                 ]}
-                                highlights={[
-                                    { word: 'intelligence service', color: COLORS.accentPrimary },
-                                    { word: 'export our capabilities', color: COLORS.accentSecondary },
-                                ]}
+                                accentLine={1}
                             />
                         ),
                     },
@@ -58,29 +117,46 @@ export const Video20_OpenToAll: React.FC = () => {
                     },
                     {
                         id: 'vision',
-                        durationInFrames: s(15),
+                        durationInFrames: s(18),
                         component: (
-                            <ContentSection
-                                heading="The Vision"
-                                bodyLines={[
-                                    'Imagine an Ethereum DeFi protocol that uses GenLayer to check risk scores.',
-                                    'Or a Solana game that uses GenLayer for NPC dialogue.',
-                                    'GenLayer becomes the universal "brain" for all blockchains.',
-                                ]}
-                                highlights={[
-                                    { word: 'Ethereum DeFi', color: COLORS.accentSecondary },
-                                    { word: 'universal "brain"', color: COLORS.accentPrimary },
+                            <IconGridScene
+                                heading="The Vision - Universal Brain"
+                                columns={3}
+                                accentColor={COLORS.accentPrimary}
+                                items={[
+                                    { emoji: '💎', label: 'Ethereum DeFi', sublabel: 'Protocol uses GenLayer for AI risk scores', color: COLORS.accentSecondary },
+                                    { emoji: '🎮', label: 'Solana Gaming', sublabel: 'NPC dialogue powered by GenLayer intelligence', color: COLORS.accentTertiary },
+                                    { emoji: '🌐', label: 'Any Chain', sublabel: 'GenLayer exports intelligence everywhere', color: COLORS.accentPrimary },
                                 ]}
                             />
                         ),
                     },
                     {
-                        id: 'final-mochi',
+                        id: 'stats',
                         durationInFrames: s(15),
                         component: (
-                            <MochiScene
-                                message="We are building the trust infrastructure for the AI age. Join the revolution."
-                                position="center"
+                            <StatCounterScene
+                                heading="The Scale of What We're Building"
+                                accentColor={COLORS.accentPrimary}
+                                stats={[
+                                    { value: '20+', label: 'Videos Released', sublabel: 'Telling the GenLayer story', color: COLORS.accentSecondary },
+                                    { value: '∞', label: 'Chains Supported', sublabel: 'Universal intelligence layer', color: COLORS.accentPrimary },
+                                    { value: '#1', label: 'Intelligent Blockchain', sublabel: 'The first and the best', color: COLORS.accentTertiary },
+                                ]}
+                            />
+                        ),
+                    },
+                    {
+                        id: 'cinematic-2',
+                        durationInFrames: s(15),
+                        component: (
+                            <CinematicStatement
+                                lines={[
+                                    'We are building the trust infrastructure',
+                                    'for the AI age.',
+                                    'Join the revolution.',
+                                ]}
+                                accentLine={2}
                             />
                         ),
                     },

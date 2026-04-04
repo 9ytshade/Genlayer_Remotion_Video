@@ -1,9 +1,9 @@
 import React from 'react';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
-import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
 import { ComparisonScene } from '../components/ComparisonScene';
+import { StatCounterScene } from '../components/StatCounterScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -33,20 +33,18 @@ export const Video12_Reliability: React.FC = () => {
                         id: 'intro',
                         durationInFrames: s(12),
                         component: (
-                            <ContentSection
+                            <StatCounterScene
                                 heading="The Reliability Gap"
-                                bodyLines={[
-                                    'Web2 AI services (like ChatGPT) sometimes fail or change their answers.',
-                                    'Blockchain transactions need to be final and irreversible.',
-                                    'How do we marry the probabilistic nature of AI with the deterministic nature of crypto?',
+                                accentColor={COLORS.accentSecondary}
+                                stats={[
+                                    {
+                                        value: '90%',
+                                        label: 'Single AI Node Reliability',
+                                        sublabel: 'One model. One point of failure. Good enough for chatbots, not for money.',
+                                        color: COLORS.accentSecondary,
+                                    },
                                 ]}
-                                highlights={[
-                                    { word: 'probabilistic', color: COLORS.accentSecondary },
-                                    { word: 'deterministic', color: COLORS.accentPrimary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video12-Scene02.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
+                                bodyText="AI is probabilistic. Blockchains are deterministic. How do we marry these two worlds?"
                             />
                         ),
                     },
@@ -65,20 +63,24 @@ export const Video12_Reliability: React.FC = () => {
                         id: 'mechanics',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <StatCounterScene
                                 heading="Multiplying Trust"
-                                bodyLines={[
-                                    'If one node runs a model, it might be 90% reliable.',
-                                    'If 5 nodes run it independently, reliability jumps to 99.999%.',
-                                    'GenLayer enforces this redundancy at the protocol level.',
+                                accentColor={COLORS.accentPrimary}
+                                stats={[
+                                    {
+                                        value: '90%',
+                                        label: '1 validator',
+                                        sublabel: 'Single point of failure',
+                                        color: COLORS.textMuted,
+                                    },
+                                    {
+                                        value: '99.999%',
+                                        label: '5 validators',
+                                        sublabel: 'Enforced at the protocol level',
+                                        color: COLORS.accentPrimary,
+                                    },
                                 ]}
-                                highlights={[
-                                    { word: '99.999%', color: COLORS.accentPrimary },
-                                    { word: 'protocol level', color: COLORS.accentTertiary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video12-Scene04.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
+                                bodyText="GenLayer enforces this redundancy at the protocol level — not as an afterthought."
                             />
                         ),
                     },

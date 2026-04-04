@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
-import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -30,21 +30,18 @@ export const Video17_TenReasons: React.FC = () => {
                     },
                     {
                         id: 'list-1',
-                        durationInFrames: s(15),
+                        durationInFrames: s(20),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="1-5: The Tech"
-                                bodyLines={[
-                                    '1. Native Internet Access (No Oracles)',
-                                    '2. Python Development (DevEx)',
-                                    '3. Subjective Consensus (Optimistic Democracy)',
-                                    '4. Unstoppable AI (Sovereignty)',
-                                    '5. Scalable Intelligence (GenVM)',
-                                ]}
-                                highlights={[
-                                    { word: 'No Oracles', color: COLORS.accentPrimary },
-                                    { word: 'Python', color: COLORS.accentSecondary },
-                                    { word: 'Optimistic Democracy', color: COLORS.accentTertiary },
+                                columns={3}
+                                accentColor={COLORS.accentPrimary}
+                                items={[
+                                    { emoji: '🌐', label: '1. No Oracles', sublabel: 'Native internet access built-in', color: COLORS.accentPrimary },
+                                    { emoji: '🐍', label: '2. Python Dev', sublabel: 'World\'s largest developer community', color: COLORS.accentSecondary },
+                                    { emoji: '🗳️', label: '3. Optimistic Democracy', sublabel: 'Subjective consensus that works', color: COLORS.accentTertiary },
+                                    { emoji: '🔒', label: '4. Unstoppable AI', sublabel: 'Sovereign intelligence, no kill switch', color: COLORS.accentPrimary },
+                                    { emoji: '⚙️', label: '5. GenVM', sublabel: 'Scalable intelligence layer', color: COLORS.accentSecondary },
                                 ]}
                             />
                         ),
@@ -62,21 +59,18 @@ export const Video17_TenReasons: React.FC = () => {
                     },
                     {
                         id: 'list-2',
-                        durationInFrames: s(15),
+                        durationInFrames: s(20),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="6-10: The Impact"
-                                bodyLines={[
-                                    '6. New DeFi Primitives (Insurance, Prediction)',
-                                    '7. Autonomous DAOs (Self-governing)',
-                                    '8. Decentralized Identity (Social Graph)',
-                                    '9. AI Commerce (Agent Economy)',
-                                    '10. The First Intelligent Blockchain',
-                                ]}
-                                highlights={[
-                                    { word: 'New DeFi Primitives', color: COLORS.accentSecondary },
-                                    { word: 'AI Commerce', color: COLORS.accentTertiary },
-                                    { word: 'First Intelligent Blockchain', color: COLORS.accentPrimary },
+                                columns={3}
+                                accentColor={COLORS.accentTertiary}
+                                items={[
+                                    { emoji: '📊', label: '6. New DeFi Primitives', sublabel: 'Insurance, Prediction Markets on-chain', color: COLORS.accentSecondary },
+                                    { emoji: '🏛️', label: '7. Autonomous DAOs', sublabel: 'Self-governing organizations', color: COLORS.accentTertiary },
+                                    { emoji: '🪪', label: '8. Decentralized Identity', sublabel: 'Social graph on the blockchain', color: COLORS.accentPrimary },
+                                    { emoji: '🤖', label: '9. AI Commerce', sublabel: 'The machine-to-machine economy', color: COLORS.accentSecondary },
+                                    { emoji: '🧠', label: '10. First Intelligent Chain', sublabel: 'A blockchain that can think', color: COLORS.accentPrimary },
                                 ]}
                             />
                         ),

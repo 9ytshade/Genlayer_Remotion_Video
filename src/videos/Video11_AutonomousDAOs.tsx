@@ -1,8 +1,9 @@
 import React from 'react';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
-import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { IconGridScene } from '../components/IconGridScene';
+import { TimelineScene } from '../components/TimelineScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -32,20 +33,15 @@ export const Video11_AutonomousDAOs: React.FC = () => {
                         id: 'problem',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
-                                heading="The DAO Bottleneck"
-                                bodyLines={[
-                                    'Most DAOs today are just multisig wallets controlled by a few humans.',
-                                    'Voting is slow. Participation is low. Decisions take weeks.',
-                                    'They aren\'t truly autonomous. They are just digital bureaucracies.',
+                            <IconGridScene
+                                heading="The DAO Bottleneck Today"
+                                columns={3}
+                                accentColor={COLORS.accentSecondary}
+                                items={[
+                                    { emoji: '🕐', label: 'Weeks to Decide', sublabel: 'Voting is painfully slow', color: COLORS.textMuted },
+                                    { emoji: '😴', label: 'Low Participation', sublabel: 'Most token holders never vote', color: COLORS.textMuted },
+                                    { emoji: '🏛️', label: 'Just Multisigs', sublabel: 'Controlled by a few humans', color: COLORS.textMuted },
                                 ]}
-                                highlights={[
-                                    { word: 'multisig wallets', color: COLORS.accentSecondary },
-                                    { word: 'digital bureaucracies', color: COLORS.textMuted },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video11-Scene02.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -64,41 +60,49 @@ export const Video11_AutonomousDAOs: React.FC = () => {
                         id: 'solution',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
-                                heading="Governance at Speed"
-                                bodyLines={[
-                                    'An Intelligent Contract can act as the DAO\'s executive branch.',
-                                    '"Invest only in carbon-neutral projects." The AI checks the project\'s whitepaper and news before releasing funds.',
-                                    '"Reject proposals with hate speech." The AI moderates submissions automatically.',
+                            <IconGridScene
+                                heading="Governance at the Speed of Software"
+                                columns={2}
+                                accentColor={COLORS.accentPrimary}
+                                items={[
+                                    { emoji: '🌱', label: 'Carbon-Neutral Check', sublabel: 'AI reviews project whitepapers before releasing funds', color: COLORS.accentTertiary },
+                                    { emoji: '🚫', label: 'Auto-Moderation', sublabel: 'Reject hate speech proposals automatically', color: COLORS.accentSecondary },
+                                    { emoji: '⚡', label: 'Instant Micro-Decisions', sublabel: 'Routine ops happen without any vote', color: COLORS.accentPrimary },
+                                    { emoji: '🧠', label: 'Reads the Internet', sublabel: 'Checks news, data, market conditions live', color: COLORS.accentTertiary },
                                 ]}
-                                highlights={[
-                                    { word: 'executive branch', color: COLORS.accentPrimary },
-                                    { word: 'checks the project', color: COLORS.accentSecondary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video11-Scene04.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
                     {
                         id: 'vision',
-                        durationInFrames: s(15),
+                        durationInFrames: s(18),
                         component: (
-                            <ContentSection
-                                heading="Self-Driving Organizations"
-                                bodyLines={[
-                                    'This allows DAOs to operate at the speed of software.',
-                                    'Micro-decisions happen instantly based on the constitution.',
-                                    'Humans only vote on major strategic shifts or constitutional amendments.',
+                            <TimelineScene
+                                heading="DAO Evolution"
+                                accentColor={COLORS.accentPrimary}
+                                steps={[
+                                    {
+                                        label: 'Today',
+                                        title: 'Digital Bureaucracy',
+                                        description: 'Multisig wallets. Weeks of voting. Low participation.',
+                                        color: COLORS.textMuted,
+                                        status: 'done',
+                                    },
+                                    {
+                                        label: 'With GenLayer',
+                                        title: 'AI-Assisted Governance',
+                                        description: 'Routine decisions automated. Humans vote on major shifts only.',
+                                        color: COLORS.accentSecondary,
+                                        status: 'active',
+                                    },
+                                    {
+                                        label: 'The Future',
+                                        title: 'Fully Autonomous Organizations',
+                                        description: 'Self-driving DAOs operating at the speed of software.',
+                                        color: COLORS.accentPrimary,
+                                        status: 'upcoming',
+                                    },
                                 ]}
-                                highlights={[
-                                    { word: 'speed of software', color: COLORS.accentPrimary },
-                                    { word: 'Micro-decisions', color: COLORS.accentTertiary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video11-Scene05.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

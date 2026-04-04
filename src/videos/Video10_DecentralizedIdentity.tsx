@@ -3,6 +3,7 @@ import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
 import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
+import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -43,9 +44,6 @@ export const Video10_DecentralizedIdentity: React.FC = () => {
                                     { word: 'wallet address', color: COLORS.textMuted },
                                     { word: 'reputation', color: COLORS.accentPrimary },
                                 ]}
-                                imagePath="assets/mochi/Mochi-Video10-Scene02.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -64,20 +62,15 @@ export const Video10_DecentralizedIdentity: React.FC = () => {
                         id: 'how-it-works',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
-                                heading="Proof of Identity"
-                                bodyLines={[
-                                    'Imagine posting a verification code on your Twitter.',
-                                    'An Intelligent Contract reads that tweet and confirms: "Yes, 0x123 owns this Twitter handle."',
-                                    'No API keys. No centralized verifier. Just the contract reading the public web.',
+                            <IconGridScene
+                                heading="Proof of Identity - How It Works"
+                                columns={3}
+                                accentColor={COLORS.accentPrimary}
+                                items={[
+                                    { emoji: '🐦', label: 'Post a Code', sublabel: 'Share a verification code on Twitter/X', color: COLORS.accentSecondary },
+                                    { emoji: '🔍', label: 'Contract Reads It', sublabel: 'Intelligent Contract fetches the tweet', color: COLORS.accentPrimary },
+                                    { emoji: '✅', label: 'Identity Linked', sublabel: 'No API keys. No centralized verifier.', color: COLORS.accentTertiary },
                                 ]}
-                                highlights={[
-                                    { word: 'reads that tweet', color: COLORS.accentPrimary },
-                                    { word: 'No centralized verifier', color: COLORS.accentTertiary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video10-Scene04.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },
@@ -85,25 +78,18 @@ export const Video10_DecentralizedIdentity: React.FC = () => {
                         id: 'impact',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="Why It Matters"
-                                bodyLines={[
-                                    'This enables uncollateralized lending based on reputation.',
-                                    'Sybil resistance for airdrops by checking account age.',
-                                    'Social recovery of wallets using trusted friends.',
+                                columns={3}
+                                accentColor={COLORS.accentSecondary}
+                                items={[
+                                    { emoji: '💳', label: 'Credit Scores', sublabel: 'Lending based on social history', color: COLORS.accentPrimary },
+                                    { emoji: '🗳️', label: 'One Person, One Vote', sublabel: 'Sybil-proof governance systems', color: COLORS.accentSecondary },
+                                    { emoji: '🤝', label: 'Social Recovery', sublabel: 'Restore wallets using trusted friends', color: COLORS.accentTertiary },
+                                    { emoji: '🤖', label: 'Bot Proof', sublabel: 'Only real humans get access', color: COLORS.accentPrimary },
+                                    { emoji: '🎁', label: 'Fair Airdrops', sublabel: 'Check account age automatically', color: COLORS.accentSecondary },
+                                    { emoji: '🔒', label: 'Privacy First', sublabel: 'No passport or KYC required', color: COLORS.accentTertiary },
                                 ]}
-                                bulletPoints={[
-                                    'Credit scores based on social history',
-                                    'One-person-one-vote systems',
-                                    'Bot-proof communities',
-                                ]}
-                                highlights={[
-                                    { word: 'reputation', color: COLORS.accentPrimary },
-                                    { word: 'Sybil resistance', color: COLORS.accentSecondary },
-                                ]}
-                                imagePath="assets/mochi/Mochi-Video10-Scene05.png"
-                                imagePosition="right"
-                                imageStyle={{ transform: 'scale(1.25)' }}
                             />
                         ),
                     },

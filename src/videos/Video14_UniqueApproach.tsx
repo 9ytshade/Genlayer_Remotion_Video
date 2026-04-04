@@ -1,9 +1,9 @@
 import React from 'react';
 import { Layout } from '../components/Layout';
 import { TitleScene } from '../components/TitleScene';
-import { ContentSection } from '../components/ContentSection';
 import { ConceptReveal } from '../components/ConceptReveal';
 import { ComparisonScene } from '../components/ComparisonScene';
+import { IconGridScene } from '../components/IconGridScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
 import { SceneSequence } from '../transitions/TransitionEngine';
@@ -33,16 +33,14 @@ export const Video14_UniqueApproach: React.FC = () => {
                         id: 'problem',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="The Centralization Trap"
-                                bodyLines={[
-                                    'Most "AI crypto" projects are just wrappers around OpenAI or centralized servers.',
-                                    'If OpenAI goes down or changes its policy, your "decentralized" app breaks.',
-                                    'This is not true decentralization. represent a single point of failure.',
-                                ]}
-                                highlights={[
-                                    { word: 'wrappers', color: COLORS.accentSecondary },
-                                    { word: 'single point of failure', color: COLORS.textMuted },
+                                columns={3}
+                                accentColor={COLORS.textMuted}
+                                items={[
+                                    { emoji: '🎭', label: 'Just Wrappers', sublabel: 'Most \"AI crypto\" wraps OpenAI APIs', color: COLORS.textMuted },
+                                    { emoji: '💥', label: 'Single Point of Failure', sublabel: 'If OpenAI goes down, your dApp breaks', color: COLORS.accentSecondary },
+                                    { emoji: '🚫', label: 'Not Truly Decentralized', sublabel: 'Corporate servers control the intelligence', color: COLORS.textMuted },
                                 ]}
                             />
                         ),
@@ -90,16 +88,14 @@ export const Video14_UniqueApproach: React.FC = () => {
                         id: 'vision',
                         durationInFrames: s(15),
                         component: (
-                            <ContentSection
+                            <IconGridScene
                                 heading="The Open Future"
-                                bodyLines={[
-                                    'GenLayer validators run open-source models locally.',
-                                    'They don\'t ask permission to think.',
-                                    'This ensures that the intelligence powering your contracts is as unstoppable as the blockchain itself.',
-                                ]}
-                                highlights={[
-                                    { word: 'run open-source models locally', color: COLORS.accentTertiary },
-                                    { word: 'unstoppable', color: COLORS.accentPrimary },
+                                columns={3}
+                                accentColor={COLORS.accentPrimary}
+                                items={[
+                                    { emoji: '🖥️', label: 'Local Models', sublabel: 'Validators run open-source models on their own hardware', color: COLORS.accentTertiary },
+                                    { emoji: '🔓', label: 'No Permission Needed', sublabel: 'Intelligence that can\'t be turned off', color: COLORS.accentPrimary },
+                                    { emoji: '♾️', label: 'Unstoppable', sublabel: 'As permanent as the blockchain itself', color: COLORS.accentSecondary },
                                 ]}
                             />
                         ),
