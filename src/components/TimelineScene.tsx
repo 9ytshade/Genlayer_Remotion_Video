@@ -47,10 +47,9 @@ export const TimelineScene: React.FC<TimelineSceneProps> = ({
         <AbsoluteFill
             style={{
                 padding: LAYOUT.contentPadding,
-                paddingTop: 80,
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-start',
+                justifyContent: 'center',
                 gap: SPACING.lg,
             }}
         >
