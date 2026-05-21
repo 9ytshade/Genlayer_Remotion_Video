@@ -24,7 +24,7 @@ for (const id of ids) {
     console.log(`▶ Rendering ${id}...`);
     try {
         execSync(
-            `npx remotion render src/index.ts ${id} out/${id}.mp4 --codec h264`,
+            `npx remotion render src/index.ts ${id} out/${id}.mp4 --codec h264 --concurrency=100%`,
             { stdio: 'inherit' }
         );
         console.log(`✅ ${id} rendered successfully.\n`);

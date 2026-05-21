@@ -4,6 +4,8 @@ import {
     useCurrentFrame,
     interpolate,
     Easing,
+    Img,
+    staticFile,
 } from 'remotion';
 import { MaskedTextReveal } from '../animations/MaskedTextReveal';
 import { COLORS } from '../brand/colors';
@@ -14,13 +16,16 @@ interface ComparisonSide {
     label: string;
     points: string[];
     color?: string;
-    icon?: string;
+    icon?: string; // Icon for the points (optional)
+    headerIcon?: string; // Icon for the header (optional)
+    headerLogoPath?: string; // Logo image for the header (optional)
 }
 
 interface ComparisonSceneProps {
     heading?: string;
     left: ComparisonSide;
     right: ComparisonSide;
+    theme?: 'light' | 'dark';
 }
 
 const ComparisonCard: React.FC<{
@@ -29,7 +34,8 @@ const ComparisonCard: React.FC<{
     isRight: boolean;
     startFrame: number;
     pointDelay: number;
-}> = ({ side, color, isRight, startFrame, pointDelay }) => {
+    theme?: 'light' | 'dark';
+}> = ({ side, color, isRight, startFrame, pointDelay, theme = 'dark' }) => {
     const frame = useCurrentFrame();
 
     const opacity = interpolate(frame, [startFrame, startFrame + 18], [0, 1], {
@@ -60,7 +66,7 @@ const ComparisonCard: React.FC<{
                 overflow: 'hidden',
                 background: isRight
                     ? `linear-gradient(135deg, ${color}15, ${color}05)`
-                    : 'linear-gradient(135deg, #0d0d0d, #111118)',
+                    : (theme === 'light' ? 'linear-gradient(135deg, #F9FAFB, #F3F4F6)' : 'linear-gradient(135deg, #0d0d0d, #111118)'),
                 boxShadow: isRight ? `0 0 ${35 * glowPulse}px ${color}40` : 'none',
             }}
         >
@@ -89,11 +95,31 @@ const ComparisonCard: React.FC<{
                         fontFamily: FONTS.primary,
                         fontSize: FONTS.sizes.h4,
                         fontWeight: FONTS.weights.bold,
-                        color: isRight ? color : COLORS.textMuted,
+                        color: isRight ? color : (theme === 'light' ? '#777' : COLORS.textMuted),
                         letterSpacing: 0.5,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center', // Center visuals
+                        gap: SPACING.sm,
+                        width: '100%',
                     }}
                 >
-                    {side.label}
+                    {side.headerLogoPath ? (
+                        <Img 
+                            src={staticFile(side.headerLogoPath)} 
+                            style={{ 
+                                height: 70, 
+                                width: 'auto',
+                                opacity: 1,
+                                objectFit: 'contain'
+                            }} 
+                        />
+                    ) : (
+                        <>
+                            {side.headerIcon && <span style={{ fontSize: 60 }}>{side.headerIcon}</span>}
+                            {side.label && <span>{side.label}</span>}
+                        </>
+                    )}
                 </div>
             </div>
 
@@ -139,7 +165,7 @@ const ComparisonCard: React.FC<{
                                 style={{
                                     fontFamily: FONTS.primary,
                                     fontSize: FONTS.sizes.body,
-                                    color: isRight ? COLORS.textPrimary : COLORS.textMuted,
+                                    color: isRight ? (theme === 'light' ? '#000' : COLORS.textPrimary) : (theme === 'light' ? '#444' : COLORS.textMuted),
                                     lineHeight: 1.5,
                                 }}
                             >
@@ -153,7 +179,7 @@ const ComparisonCard: React.FC<{
     );
 };
 
-export const ComparisonScene: React.FC<ComparisonSceneProps> = ({ heading, left, right }) => {
+export const ComparisonScene: React.FC<ComparisonSceneProps> = ({ heading, left, right, theme = 'dark' }) => {
     const frame = useCurrentFrame();
     const leftColor = left.color || COLORS.textMuted;
     const rightColor = right.color || COLORS.accentPrimary;
@@ -185,13 +211,14 @@ export const ComparisonScene: React.FC<ComparisonSceneProps> = ({ heading, left,
                         duration={18}
                         fontSize={FONTS.sizes.h2}
                         fontWeight={FONTS.weights.bold}
+                        color={theme === 'light' ? '#000' : COLORS.textPrimary}
                         style={{ textAlign: 'center' }}
                     />
                 </div>
             )}
 
             <div style={{ display: 'flex', alignItems: 'stretch', gap: 0, flex: 1 }}>
-                <ComparisonCard side={left} color={leftColor} isRight={false} startFrame={10} pointDelay={28} />
+                <ComparisonCard side={left} color={leftColor} isRight={false} startFrame={10} pointDelay={28} theme={theme} />
 
                 {/* VS Center Badge */}
                 <div
@@ -218,7 +245,7 @@ export const ComparisonScene: React.FC<ComparisonSceneProps> = ({ heading, left,
                             fontFamily: FONTS.primary,
                             fontSize: 22,
                             fontWeight: 900,
-                            color: COLORS.textPrimary,
+                            color: theme === 'light' ? '#000' : COLORS.textPrimary,
                             letterSpacing: -1,
                         }}
                     >
@@ -226,7 +253,7 @@ export const ComparisonScene: React.FC<ComparisonSceneProps> = ({ heading, left,
                     </div>
                 </div>
 
-                <ComparisonCard side={right} color={rightColor} isRight startFrame={22} pointDelay={45} />
+                <ComparisonCard side={right} color={rightColor} isRight startFrame={22} pointDelay={45} theme={theme} />
             </div>
         </AbsoluteFill>
     );

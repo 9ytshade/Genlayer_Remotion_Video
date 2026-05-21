@@ -101,7 +101,11 @@ export const SceneSequence: React.FC<SceneSequenceProps> = ({ scenes }) => {
                             transitionIn={scene.transitionIn}
                             transitionOut={scene.transitionOut}
                         >
-                            {scene.component}
+                            {React.isValidElement(scene.component)
+                                ? React.cloneElement(scene.component as React.ReactElement, {
+                                      durationInFrames: scene.durationInFrames,
+                                  })
+                                : scene.component}
                         </SceneTransition>
                     </Sequence>
                 );

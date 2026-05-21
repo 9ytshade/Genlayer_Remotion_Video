@@ -4,8 +4,10 @@ import {
     useCurrentFrame,
     interpolate,
     Easing,
+    random,
 } from 'remotion';
 import { MaskedTextReveal } from '../animations/MaskedTextReveal';
+import { TypewriterText } from '../animations/TypewriterText';
 import { COLORS } from '../brand/colors';
 import { FONTS } from '../brand/fonts';
 import { SPACING } from '../brand/tokens';
@@ -26,23 +28,74 @@ const ValidatorNode: React.FC<{
     voteFrame: number;
     nodeFrame: number;
     accentColor: string;
-}> = ({ emoji, label, voteFrame, nodeFrame, accentColor }) => {
+    theme?: 'light' | 'dark';
+    durationInFrames?: number;
+    index: number;
+    total: number;
+}> = ({ emoji, label, voteFrame, nodeFrame, accentColor, theme = 'dark', durationInFrames, index, total }) => {
     const frame = useCurrentFrame();
 
-    const nodeOpacity = interpolate(frame, [nodeFrame, nodeFrame + 12], [0, 1], {
+    const exitDuration = 12;
+    const exitStagger = 5;
+    const exitDelay = durationInFrames ? durationInFrames - 20 - exitStagger * (total - 1 - index) : Infinity;
+
+    const nodeOpacityEntry = interpolate(frame, [nodeFrame, nodeFrame + 12], [0, 1], {
         extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic),
     });
-    const nodeScale = interpolate(frame, [nodeFrame, nodeFrame + 12], [0.6, 1], {
+    const nodeOpacityExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [1, 0], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic),
+    });
+    const nodeOpacity = Math.min(nodeOpacityEntry, nodeOpacityExit);
+
+    const nodeScaleEntry = interpolate(frame, [nodeFrame, nodeFrame + 12], [0.6, 1], {
         extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(1.5)),
     });
+    const nodeScaleExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [1, 0.6], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.in(Easing.back(1.5)),
+    });
+    const nodeScale = frame > exitDelay ? nodeScaleExit : nodeScaleEntry;
 
-    const hasVoted = frame >= voteFrame;
-    const voteOpacity = interpolate(frame, [voteFrame, voteFrame + 10], [0, 1], {
+    // Randomize entry and exit angles
+    const entryAngle = random(`val-enter-${index}`) * Math.PI * 2;
+    const exitAngle = random(`val-exit-${index}`) * Math.PI * 2;
+    
+    const startX = Math.cos(entryAngle) * 300;
+    const startY = Math.sin(entryAngle) * 300;
+    const endX = Math.cos(exitAngle) * 300;
+    const endY = Math.sin(exitAngle) * 300;
+
+    const translateYEntry = interpolate(frame, [nodeFrame, nodeFrame + 12], [startY, 0], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)
+    });
+    const translateYExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [0, endY], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)
+    });
+    const translateY = frame > exitDelay ? translateYExit : translateYEntry;
+
+    const translateXEntry = interpolate(frame, [nodeFrame, nodeFrame + 12], [startX, 0], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)
+    });
+    const translateXExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [0, endX], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)
+    });
+    const translateX = frame > exitDelay ? translateXExit : translateXEntry;
+
+    const hasVoted = frame >= voteFrame && frame < exitDelay;
+    const voteOpacityEntry = interpolate(frame, [voteFrame, voteFrame + 10], [0, 1], {
         extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(2)),
     });
-    const voteScale = interpolate(frame, [voteFrame, voteFrame + 10], [0.3, 1], {
+    const voteOpacityExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [1, 0], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic),
+    });
+    const voteOpacity = Math.min(voteOpacityEntry, voteOpacityExit);
+
+    const voteScaleEntry = interpolate(frame, [voteFrame, voteFrame + 10], [0.3, 1], {
         extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(2)),
     });
+    const voteScaleExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [1, 0.3], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.in(Easing.back(2)),
+    });
+    const voteScale = frame > exitDelay ? voteScaleExit : voteScaleEntry;
 
     // Glow pulse after voting
     const glowPulse = hasVoted
@@ -55,7 +108,7 @@ const ValidatorNode: React.FC<{
         <div
             style={{
                 opacity: nodeOpacity,
-                transform: `scale(${nodeScale})`,
+                transform: `translateX(${translateX}px) translateY(${translateY}px) scale(${nodeScale})`,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -96,8 +149,8 @@ const ValidatorNode: React.FC<{
                     borderRadius: '50%',
                     background: hasVoted
                         ? `radial-gradient(circle, ${accentColor}40, ${accentColor}15)`
-                        : `${COLORS.textMuted}15`,
-                    border: `3px solid ${hasVoted ? accentColor : COLORS.textMuted}50`,
+                        : `${theme === 'light' ? '#E5E7EB' : COLORS.textMuted}15`,
+                    border: `3px solid ${hasVoted ? accentColor : (theme === 'light' ? '#E5E7EB' : COLORS.textMuted)}50`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -110,27 +163,44 @@ const ValidatorNode: React.FC<{
             </div>
 
             {/* Label */}
-            <div
+            <TypewriterText
+                text={label}
+                startFrame={nodeFrame + 5}
+                framesPerChar={1}
                 style={{
                     fontFamily: FONTS.primary,
                     fontSize: FONTS.sizes.caption,
                     fontWeight: FONTS.weights.medium,
-                    color: hasVoted ? COLORS.textSecondary : COLORS.textMuted,
+                    color: hasVoted ? (theme === 'light' ? '#333' : COLORS.textSecondary) : (theme === 'light' ? '#777' : COLORS.textMuted),
                     textAlign: 'center',
                 }}
-            >
-                {label}
-            </div>
+            />
         </div>
     );
 };
 
+export interface ValidatorConsensusSceneProps {
+    title?: string;
+    fact?: string;
+    accentColor?: string;
+    secondaryColor?: string;
+    theme?: 'light' | 'dark';
+    durationInFrames?: number;
+}
+
 /** Validator Consensus — animated nodes reaching agreement */
-export const ValidatorConsensusScene: React.FC = () => {
+export const ValidatorConsensusScene: React.FC<ValidatorConsensusSceneProps> = ({
+    title = "Anchoring Truth On-Chain",
+    fact = '"Bitcoin ETF approved by SEC on January 10, 2024"',
+    accentColor = COLORS.accentPrimary,
+    secondaryColor = COLORS.accentTertiary,
+    theme = 'dark',
+    durationInFrames,
+}) => {
     const frame = useCurrentFrame();
 
-    // All validators voted by frame ~90
-    const allVotedFrame = 20 + VALIDATORS.length * 12 + 15;
+    // All validators voted by frame ~90 (adjusted for increased stagger)
+    const allVotedFrame = 20 + VALIDATORS.length * 20 + 25;
     const stampOpacity = interpolate(frame, [allVotedFrame, allVotedFrame + 18], [0, 1], {
         extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(1.5)),
     });
@@ -142,9 +212,13 @@ export const ValidatorConsensusScene: React.FC = () => {
     });
 
     // Connecting lines opacity — shows after all nodes appear
-    const linesOpacity = interpolate(frame, [55, 70], [0, 0.4], {
+    const linesOpacityEntry = interpolate(frame, [55, 70], [0, 0.4], {
         extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
     });
+    const linesOpacityExit = durationInFrames ? interpolate(frame, [durationInFrames - 30, durationInFrames - 15], [0.4, 0], {
+        extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+    }) : 0.4;
+    const linesOpacity = Math.min(linesOpacityEntry, linesOpacityExit);
 
     return (
         <AbsoluteFill
@@ -157,13 +231,17 @@ export const ValidatorConsensusScene: React.FC = () => {
             }}
         >
             {/* Heading */}
-            <MaskedTextReveal
-                text="Anchoring Truth On-Chain"
-                startFrame={3}
-                duration={16}
-                fontSize={FONTS.sizes.h2}
-                fontWeight={FONTS.weights.bold}
-            />
+            <div style={{ textAlign: 'center', width: '100%', marginBottom: SPACING.lg }}>
+                <MaskedTextReveal
+                    text={title}
+                    startFrame={3}
+                    duration={16}
+                    fontSize={FONTS.sizes.h2}
+                    fontWeight={FONTS.weights.black} // Consistent with other scenes
+                    color={theme === 'light' ? '#000' : COLORS.textPrimary}
+                    style={{ textAlign: 'center' }}
+                />
+            </div>
 
             {/* Sub-label */}
             {(() => {
@@ -175,7 +253,7 @@ export const ValidatorConsensusScene: React.FC = () => {
                         opacity: subOpacity,
                         fontFamily: FONTS.primary,
                         fontSize: FONTS.sizes.body,
-                        color: COLORS.textMuted,
+                        color: theme === 'light' ? '#777' : COLORS.textMuted,
                         marginTop: -SPACING.md,
                     }}>
                         When multiple validators agree on a fact, it becomes{' '}
@@ -220,9 +298,9 @@ export const ValidatorConsensusScene: React.FC = () => {
                             <div style={{
                                 fontFamily: 'monospace',
                                 fontSize: FONTS.sizes.body,
-                                color: COLORS.textPrimary,
+                                color: theme === 'light' ? '#000' : COLORS.textPrimary,
                             }}>
-                                "Bitcoin ETF approved by SEC on January 10, 2024"
+                                {fact}
                             </div>
                         </div>
                         <div style={{
@@ -230,8 +308,8 @@ export const ValidatorConsensusScene: React.FC = () => {
                             flexShrink: 0,
                             fontFamily: FONTS.primary,
                             fontSize: FONTS.sizes.caption,
-                            color: COLORS.textMuted,
-                            background: `${COLORS.textMuted}15`,
+                            color: theme === 'light' ? '#777' : COLORS.textMuted,
+                            background: theme === 'light' ? '#F3F4F6' : `${COLORS.textMuted}15`,
                             padding: '6px 16px',
                             borderRadius: 99,
                         }}>
@@ -277,18 +355,29 @@ export const ValidatorConsensusScene: React.FC = () => {
                         key={i}
                         emoji={v.emoji}
                         label={v.label}
-                        nodeFrame={stagger(i, 10) + 20}
-                        voteFrame={stagger(i, 12) + 55}
+                        nodeFrame={stagger(i, 20) + 20}
+                        voteFrame={stagger(i, 20) + 65}
                         accentColor={COLORS.accentPrimary}
+                        theme={theme}
+                        durationInFrames={durationInFrames}
+                        index={i}
+                        total={VALIDATORS.length}
                     />
                 ))}
             </div>
 
             {/* TRUTH ANCHORED stamp */}
-            <div
-                style={{
-                    opacity: stampOpacity,
-                    transform: `scale(${stampScale})`,
+            {(() => {
+                const stampOpacityExit = durationInFrames ? interpolate(frame, [durationInFrames - 20, durationInFrames - 5], [1, 0], {
+                    extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)
+                }) : 1;
+                const finalStampOpacity = Math.min(stampOpacity, stampOpacityExit);
+                
+                return (
+                    <div
+                        style={{
+                            opacity: finalStampOpacity,
+                            transform: `scale(${stampScale})`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -320,7 +409,7 @@ export const ValidatorConsensusScene: React.FC = () => {
                         style={{
                             fontFamily: FONTS.primary,
                             fontSize: FONTS.sizes.body,
-                            color: COLORS.textSecondary,
+                            color: theme === 'light' ? '#333' : COLORS.textSecondary,
                             marginTop: 4,
                         }}
                     >
@@ -329,6 +418,8 @@ export const ValidatorConsensusScene: React.FC = () => {
                 </div>
                 <div style={{ fontSize: 48 }}>✅</div>
             </div>
+            );
+            })()}
         </AbsoluteFill>
     );
 };

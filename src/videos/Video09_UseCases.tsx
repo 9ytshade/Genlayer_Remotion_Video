@@ -35,6 +35,7 @@ export const Video09_UseCases: React.FC = () => {
                             <IconGridScene
                                 heading="The Next Generation of dApps"
                                 columns={3}
+                                verticalCenter={true}
                                 items={[
                                     {
                                         emoji: '🤖',
@@ -132,6 +133,7 @@ export const Video09_UseCases: React.FC = () => {
                             <IconGridScene
                                 heading="Autonomous Management"
                                 columns={3}
+                                verticalCenter={true}
                                 accentColor={COLORS.accentPrimary}
                                 items={[
                                     { emoji: '📜', label: 'AI Constitution', sublabel: 'Reads proposals in any language', color: COLORS.accentPrimary },

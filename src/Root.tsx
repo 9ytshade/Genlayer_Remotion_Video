@@ -22,6 +22,7 @@ import { Video17_TenReasons } from './videos/Video17_TenReasons';
 import { Video18_Roadmap } from './videos/Video18_Roadmap';
 import { Video19_Partnerships } from './videos/Video19_Partnerships';
 import { Video20_OpenToAll } from './videos/Video20_OpenToAll';
+import { Special01_InternetCourt } from './videos/Special01_InternetCourt';
 import { Thumbnail } from './components/Thumbnail';
 
 /**
@@ -48,6 +49,7 @@ const VIDEO_COMPONENTS: Record<string, React.FC> = {
     Video18: Video18_Roadmap,
     Video19: Video19_Partnerships,
     Video20: Video20_OpenToAll,
+    Special01: Special01_InternetCourt,
 };
 
 /**

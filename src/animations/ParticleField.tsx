@@ -12,6 +12,14 @@ interface ParticleFieldProps {
     seed?: number;
 }
 
+/**
+ * Particle field with parallax layers and twinkle.
+ * 
+ * Previously used SVG feGaussianBlur filter for "near" particle glow,
+ * which was very expensive per frame. Now uses a larger semi-transparent
+ * circle behind each near particle for an equivalent glow effect at
+ * zero filter cost.
+ */
 export const ParticleField: React.FC<ParticleFieldProps> = ({
     particleCount = 80,
     speed = 1,
@@ -57,16 +65,6 @@ export const ParticleField: React.FC<ParticleFieldProps> = ({
                 viewBox={`0 0 ${COMP.width} ${COMP.height}`}
                 style={fullScreen}
             >
-                <defs>
-                    <filter id="particle-glow">
-                        <feGaussianBlur stdDeviation="2" result="blur" />
-                        <feMerge>
-                            <feMergeNode in="blur" />
-                            <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                    </filter>
-                </defs>
-
                 {particles.map((p, i) => {
                     // Upward drift
                     const yOffset = (frame * p.speed) % COMP.height;
@@ -84,17 +82,29 @@ export const ParticleField: React.FC<ParticleFieldProps> = ({
                         seededRandom(seed + i * 23) * Math.PI * 2
                     );
                     const opacity = p.opacity * interpolate(twinkle, [-1, 1], [0.5, 1]);
+                    const isNear = p.layer === 'near';
 
                     return (
-                        <circle
-                            key={i}
-                            cx={x}
-                            cy={y}
-                            r={p.size}
-                            fill={layerColor[p.layer]}
-                            opacity={opacity}
-                            filter={p.layer === 'near' ? 'url(#particle-glow)' : undefined}
-                        />
+                        <g key={i}>
+                            {/* Glow halo for near particles — replaces expensive feGaussianBlur */}
+                            {isNear && (
+                                <circle
+                                    cx={x}
+                                    cy={y}
+                                    r={p.size * 4}
+                                    fill={layerColor[p.layer]}
+                                    opacity={opacity * 0.25}
+                                />
+                            )}
+                            {/* Core particle */}
+                            <circle
+                                cx={x}
+                                cy={y}
+                                r={p.size}
+                                fill={layerColor[p.layer]}
+                                opacity={opacity}
+                            />
+                        </g>
                     );
                 })}
             </svg>

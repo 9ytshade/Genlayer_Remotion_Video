@@ -61,8 +61,8 @@ const CodeLine: React.FC<{
     const color = isComment
         ? COLORS.textMuted
         : isSolidity
-        ? COLORS.textSecondary
-        : COLORS.textPrimary;
+            ? COLORS.textSecondary
+            : COLORS.textPrimary;
 
     return (
         <div
@@ -278,7 +278,7 @@ export const LanguageWarsScene: React.FC = () => {
                         fontSize: FONTS.sizes.body,
                         color: COLORS.textMuted,
                     }}>
-                        GenLayer changes this —{' '}
+                        GenLayer changes this {' '}
                         <span style={{ color: COLORS.accentTertiary, fontWeight: FONTS.weights.bold }}>
                             if you know Python, you are already a GenLayer developer.
                         </span>

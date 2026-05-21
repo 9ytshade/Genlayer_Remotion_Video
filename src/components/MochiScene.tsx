@@ -10,12 +10,14 @@ import {
 import { COLORS } from '../brand/colors';
 import { FONTS } from '../brand/fonts';
 import { LAYOUT, SPACING } from '../brand/tokens';
+import { TypewriterText } from '../animations/TypewriterText';
 
 interface MochiSceneProps {
     message: string;
     position?: 'left' | 'right' | 'center';
     mochiImage?: string;
     showBubble?: boolean;
+    theme?: 'light' | 'dark';
 }
 
 /**
@@ -27,6 +29,7 @@ export const MochiScene: React.FC<MochiSceneProps> = ({
     position = 'right',
     mochiImage = 'assets/mochi/mochi.png',
     showBubble = true,
+    theme = 'dark',
 }) => {
     const frame = useCurrentFrame();
 
@@ -86,12 +89,12 @@ export const MochiScene: React.FC<MochiSceneProps> = ({
                 >
                     <div
                         style={{
-                            background: `rgba(20, 20, 25, 0.95)`,
+                            background: theme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(20, 20, 25, 0.95)',
                             border: `1px solid ${COLORS.accentPrimary}40`,
                             borderRadius: '24px 24px 4px 24px', // Chat bubble shape
                             padding: 0,
                             maxWidth: 700,
-                            boxShadow: `0 10px 40px ${COLORS.accentPrimaryGlow}`,
+                            boxShadow: theme === 'light' ? `0 10px 40px ${COLORS.accentPrimary}30` : `0 10px 40px ${COLORS.accentPrimaryGlow}`,
                             backdropFilter: 'blur(10px)',
                             position: 'relative',
                         }}
@@ -128,11 +131,22 @@ export const MochiScene: React.FC<MochiSceneProps> = ({
                                 fontFamily: FONTS.primary,
                                 fontSize: FONTS.sizes.h4,
                                 fontWeight: FONTS.weights.medium,
-                                color: COLORS.textPrimary,
+                                color: theme === 'light' ? '#000' : COLORS.textPrimary,
                                 lineHeight: FONTS.lineHeights.relaxed,
                             }}
                         >
-                            {message}
+                            <TypewriterText
+                                text={message}
+                                startFrame={40}
+                                framesPerChar={1}
+                                style={{
+                                    fontFamily: FONTS.primary,
+                                    fontSize: FONTS.sizes.h4,
+                                    fontWeight: FONTS.weights.medium,
+                                    color: theme === 'light' ? '#000' : COLORS.textPrimary,
+                                    lineHeight: FONTS.lineHeights.relaxed,
+                                }}
+                            />
                         </div>
                     </div>
                 </div>

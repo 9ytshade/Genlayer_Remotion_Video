@@ -31,7 +31,7 @@ export const Video12_Reliability: React.FC = () => {
                     },
                     {
                         id: 'intro',
-                        durationInFrames: s(12),
+                        durationInFrames: s(18),
                         component: (
                             <StatCounterScene
                                 heading="The Reliability Gap"
@@ -39,12 +39,24 @@ export const Video12_Reliability: React.FC = () => {
                                 stats={[
                                     {
                                         value: '90%',
-                                        label: 'Single AI Node Reliability',
-                                        sublabel: 'One model. One point of failure. Good enough for chatbots, not for money.',
+                                        label: 'Single Model Accuracy',
+                                        sublabel: 'Acceptable for drafting emails, but completely disqualifying for decentralized financial consensus.',
+                                        color: COLORS.textMuted,
+                                    },
+                                    {
+                                        value: '0%',
+                                        label: 'Deterministic Guarantees',
+                                        sublabel: 'Large Language Models inherently hallucinate, making them fundamentally incompatible with legacy blockchains.',
                                         color: COLORS.accentSecondary,
                                     },
+                                    {
+                                        value: '$1.8T+',
+                                        label: 'Capital at Risk',
+                                        sublabel: 'The massive crypto economy simply cannot trust its security to a single, centralized AI API key.',
+                                        color: COLORS.accentTertiary,
+                                    },
                                 ]}
-                                bodyText="AI is probabilistic. Blockchains are deterministic. How do we marry these two worlds?"
+                                bodyText="AI is naturally probabilistic. Legacy blockchains demand absolute determinism. GenLayer bridges this fundamental chasm."
                             />
                         ),
                     },
@@ -61,7 +73,7 @@ export const Video12_Reliability: React.FC = () => {
                     },
                     {
                         id: 'mechanics',
-                        durationInFrames: s(15),
+                        durationInFrames: s(22),
                         component: (
                             <StatCounterScene
                                 heading="Multiplying Trust"
@@ -69,18 +81,24 @@ export const Video12_Reliability: React.FC = () => {
                                 stats={[
                                     {
                                         value: '90%',
-                                        label: '1 validator',
-                                        sublabel: 'Single point of failure',
+                                        label: '1 Validator',
+                                        sublabel: 'A single point of failure highly susceptible to hallucinations, API outages, or adversarial manipulation.',
                                         color: COLORS.textMuted,
                                     },
                                     {
+                                        value: '99.9%',
+                                        label: '3 Validators',
+                                        sublabel: 'Decentralized redundancy begins to rapidly isolate and override rogue AI outputs.',
+                                        color: COLORS.accentSecondary,
+                                    },
+                                    {
                                         value: '99.999%',
-                                        label: '5 validators',
-                                        sublabel: 'Enforced at the protocol level',
+                                        label: '5+ Validators',
+                                        sublabel: 'Absolute mathematical certainty achieved natively via the Equivalence Principle.',
                                         color: COLORS.accentPrimary,
                                     },
                                 ]}
-                                bodyText="GenLayer enforces this redundancy at the protocol level — not as an afterthought."
+                                bodyText="GenLayer bakes LLM redundancy directly into the protocol consensus—not as a fragile off-chain afterthought."
                             />
                         ),
                     },

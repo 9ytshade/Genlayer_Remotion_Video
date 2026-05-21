@@ -1,11 +1,11 @@
 import React from 'react';
-import { Layout } from '../components/Layout';
-import { TitleScene } from '../components/TitleScene';
+import { ElegantLayout } from '../components/ElegantLayout';
+import { ElegantTitleScene } from '../components/ElegantTitleScene';
 import { ConceptReveal } from '../components/ConceptReveal';
 import { TimelineScene } from '../components/TimelineScene';
 import { MochiScene } from '../components/MochiScene';
 import { ClosingScene } from '../components/ClosingScene';
-import { SceneSequence } from '../transitions/TransitionEngine';
+import { ElegantSceneSequence } from '../transitions/ElegantTransitionEngine';
 import { COLORS } from '../brand/colors';
 import { s } from '../brand/tokens';
 import { useEnergyFactor } from '../animations/EnergyBuild';
@@ -14,14 +14,14 @@ export const Video18_Roadmap: React.FC = () => {
     const energy = useEnergyFactor(s(120));
 
     return (
-        <Layout neuralIntensity={energy} particleIntensity={energy}>
-            <SceneSequence
+        <ElegantLayout intensity={energy}>
+            <ElegantSceneSequence
                 scenes={[
                     {
                         id: 'title',
                         durationInFrames: s(5),
                         component: (
-                            <TitleScene
+                            <ElegantTitleScene
                                 title="Roadmap to Mainnet"
                                 subtitle="The Path Forward"
                                 episodeNumber={18}
@@ -39,14 +39,14 @@ export const Video18_Roadmap: React.FC = () => {
                                     {
                                         label: 'Phase 1 — Complete',
                                         title: 'Asimov · Local Testnet',
-                                        description: 'Developers run a local validator and test Intelligent Contracts. Focus: GenVM stability and basic Python execution.',
+                                        description: 'Successfully completed. Developers deployed local validators to rigorously test the core Intelligent Contract framework, establishing crucial GenVM stability and native Python execution.',
                                         color: COLORS.accentTertiary,
                                         status: 'done',
                                     },
                                     {
                                         label: 'Phase 2 — Live Now 🔴',
                                         title: 'Bradbury · Public Testnet',
-                                        description: 'A live network where anyone can deploy. Focus: Consensus mechanism, networking, and security auditing.',
+                                        description: 'Our active public environment. Builders everywhere are deploying contracts while we stress-test the consensus mechanism, optimize network scaling, and undergo critical security audits.',
                                         color: COLORS.accentSecondary,
                                         status: 'active',
                                     },
@@ -61,18 +61,19 @@ export const Video18_Roadmap: React.FC = () => {
                             <TimelineScene
                                 heading="Where We're Going"
                                 accentColor={COLORS.accentPrimary}
+                                startIndex={3}
                                 steps={[
                                     {
                                         label: 'Phase 3 — Coming Soon',
                                         title: 'Clarke · Incentivized Testnet',
-                                        description: 'The final rehearsal before launch. Focus: Stress testing, validator onboarding, and economic game theory.',
+                                        description: 'The ultimate proving ground and final rehearsal. Designed for extreme stress-testing, large-scale validator onboarding, and refining complex cryptoeconomic game theory.',
                                         color: COLORS.accentPrimary,
                                         status: 'upcoming',
                                     },
                                     {
                                         label: 'The Goal',
                                         title: 'Mainnet Launch 🚀',
-                                        description: 'The Genesis of the Intelligent Blockchain. Open to all builders. The future is permissionless.',
+                                        description: 'The genesis of the world\'s first true Intelligent Blockchain. Unlocking a completely permissionless, unstoppable network where AI and Web3 converge natively for everyone.',
                                         color: COLORS.accentPrimaryLight,
                                         status: 'upcoming',
                                     },
@@ -108,6 +109,6 @@ export const Video18_Roadmap: React.FC = () => {
                     },
                 ]}
             />
-        </Layout>
+        </ElegantLayout>
     );
 };

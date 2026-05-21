@@ -48,32 +48,75 @@ export const Video13_PythonCode: React.FC = () => {
                     },
                     {
                         id: 'features',
-                        durationInFrames: s(15),
+                        durationInFrames: s(24),
                         component: (
                             <IconGridScene
                                 heading="Supercharged Development"
                                 columns={3}
                                 accentColor={COLORS.accentTertiary}
                                 items={[
-                                    { emoji: '🐍', label: 'Python Native', sublabel: 'Import standard libraries. Use familiar syntax.', color: COLORS.accentTertiary },
-                                    { emoji: '🤖', label: 'AI Prompts in Code', sublabel: 'Mix `if x > 10` with `if sentiment is positive`', color: COLORS.accentPrimary },
-                                    { emoji: '🌐', label: 'Web Access Built-in', sublabel: 'Call any URL directly from your contract', color: COLORS.accentSecondary },
+                                    { emoji: '🐍', label: 'Native Python Support', sublabel: 'Write smart contracts using the world’s most popular programming language—no need to learn esoteric Web3 syntax.', color: COLORS.accentTertiary },
+                                    { emoji: '🧠', label: 'Integrated AI Logic', sublabel: 'Seamlessly blend deterministic logic (if x > 10) with subjective AI reasoning (if sentiment is positive) in the exact same function.', color: COLORS.accentPrimary },
+                                    { emoji: '🌐', label: 'Native Web Access', sublabel: 'Fetch and process real-time internet data directly within your contract without relying on complex, centralized oracles.', color: COLORS.accentSecondary },
+                                    { emoji: '📦', label: 'Standard Libraries', sublabel: 'Leverage Python’s massive ecosystem. Import familiar standard libraries directly into your blockchain execution environment.', color: COLORS.accentTertiary },
+                                    { emoji: '⚡', label: 'Zero Learning Curve', sublabel: 'If you know basic Python, you are instantly a highly capable GenLayer developer. Start building the future immediately.', color: COLORS.accentPrimary },
+                                    { emoji: '🛡️', label: 'Equivalence Validation', sublabel: 'Write complex AI-driven code while the protocol automatically guarantees deterministic consensus across all validators.', color: COLORS.accentSecondary },
                                 ]}
                             />
                         ),
                     },
                     {
                         id: 'simulator',
-                        durationInFrames: s(15),
+                        durationInFrames: s(24),
                         component: (
                             <IconGridScene
                                 heading="GenLayer Simulator"
                                 columns={3}
                                 accentColor={COLORS.accentPrimary}
                                 items={[
-                                    { emoji: '🧪', label: 'Test Locally', sublabel: 'Run contracts before deploying to network', color: COLORS.accentPrimary },
-                                    { emoji: '🎭', label: 'Mock AI Responses', sublabel: 'Simulate LLM outputs deterministically', color: COLORS.accentTertiary },
-                                    { emoji: '🔄', label: 'Code → Simulate → Deploy', sublabel: 'Rapid iteration cycle with instant feedback', color: COLORS.accentSecondary },
+                                    { emoji: '🧪', label: 'Local Sandbox', sublabel: 'Instantly spin up a local GenLayer environment to thoroughly test your intelligent contracts before exposing them to the mainnet.', color: COLORS.accentPrimary },
+                                    { emoji: '🎭', label: 'Deterministic Mocking', sublabel: 'Precisely mock complex LLM responses and web requests to guarantee your contract behaves exactly as expected under edge cases.', color: COLORS.accentTertiary },
+                                    { emoji: '🔄', label: 'Rapid Iteration', sublabel: 'Experience Web2-level development speed. Write, simulate, debug, and deploy complex AI logic in seconds—not hours.', color: COLORS.accentSecondary },
+                                    { emoji: '📊', label: 'Advanced Debugging', sublabel: 'Track execution paths, gas consumption, and AI reasoning branches with granular precision directly from your local terminal.', color: COLORS.accentPrimary },
+                                    { emoji: '🔌', label: 'API Emulation', sublabel: 'Safely simulate interactions with external APIs and live web endpoints without paying network gas fees or hitting rate limits.', color: COLORS.accentTertiary },
+                                    { emoji: '🚀', label: 'One-Click Deployment', sublabel: 'Transition seamlessly from local simulation to the live Bradbury testnet with a single, frictionless CLI command.', color: COLORS.accentSecondary },
+                                ]}
+                            />
+                        ),
+                    },
+                    {
+                        id: 'updates',
+                        durationInFrames: s(25),
+                        component: (
+                            <IconGridScene
+                                heading="The Vibe Coding Era"
+                                columns={2}
+                                accentColor={COLORS.accentSecondary}
+                                items={[
+                                    { 
+                                        emoji: '🤖', 
+                                        label: 'AI-Native Building', 
+                                        sublabel: 'Write contracts with Claude, Gemini, or Copilot. If they know Python, they know GenLayer.', 
+                                        color: COLORS.accentPrimary 
+                                    },
+                                    { 
+                                        emoji: '🧱', 
+                                        label: 'GenLayer Skills', 
+                                        sublabel: 'Don\'t reinvent the wheel. Snap in modular capabilities and plugins effortlessly.', 
+                                        color: COLORS.accentSecondary 
+                                    },
+                                    { 
+                                        emoji: '🌐', 
+                                        label: 'Testnet Bradbury', 
+                                        sublabel: 'Take your AI-generated contracts straight to a live network. Instant deployment.', 
+                                        color: COLORS.accentTertiary 
+                                    },
+                                    { 
+                                        emoji: '🎨', 
+                                        label: 'Focus on the Vibe', 
+                                        sublabel: 'Zero blockchain complexity. Tell the AI what you want, and bring your ideas to life.', 
+                                        color: COLORS.accentPrimary 
+                                    },
                                 ]}
                             />
                         ),

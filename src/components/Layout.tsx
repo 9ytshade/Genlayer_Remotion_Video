@@ -17,6 +17,10 @@ interface LayoutProps {
     showVignette?: boolean;
     neuralIntensity?: number;
     particleIntensity?: number;
+    accentColor?: string;
+    secondaryColor?: string;
+    watermarkLogo?: string;
+    theme?: 'light' | 'dark';
 }
 
 /**
@@ -33,42 +37,56 @@ export const Layout: React.FC<LayoutProps> = ({
     showVignette = true,
     neuralIntensity = 1,
     particleIntensity = 1,
+    accentColor = COLORS.accentPrimarySubtle,
+    secondaryColor = COLORS.accentSecondaryGlow,
+    watermarkLogo = 'assets/logos/Genlayer-noBG.png',
+    theme = 'dark',
 }) => {
     const content = (
         <AbsoluteFill
             style={{
-                backgroundColor: COLORS.bgPrimary,
+                backgroundColor: theme === 'light' ? '#FFFFFF' : COLORS.bgPrimary,
             }}
         >
-            {/* Background gradient layer */}
-            <div
-                style={{
-                    ...fullScreen,
-                    background: `radial-gradient(ellipse at 30% 40%, ${COLORS.accentPrimarySubtle} 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 60%, ${COLORS.accentSecondaryGlow} 0%, transparent 50%)`,
-                }}
-            />
+            {/* Background gradient layer (only in dark mode) */}
+            {theme === 'dark' && (
+                <div
+                    style={{
+                        ...fullScreen,
+                        background: `radial-gradient(ellipse at 30% 40%, ${accentColor} 0%, transparent 60%),
+                            radial-gradient(ellipse at 70% 60%, ${secondaryColor} 0%, transparent 50%)`,
+                    }}
+                />
+            )}
 
-            {/* Watermark Logo */}
+            {/* Watermark Logo - Maximized for "Internet Court" Background Backdrop */}
             <AbsoluteFill
                 style={{
                     justifyContent: 'center',
                     alignItems: 'center',
-                    opacity: 0.03,
+                    opacity: theme === 'light' ? 0.22 : 0.18, 
                     zIndex: 0,
                 }}
             >
                 <Img
-                    src={staticFile('assets/logos/Genlayer-noBG.png')}
-                    style={{ width: '40%', objectFit: 'contain' }}
+                    src={staticFile(watermarkLogo)}
+                    style={{ 
+                        width: '75%', 
+                        height: 'auto',
+                        objectFit: 'contain', 
+                        // blur(10px) removed — it was re-computed every frame due to
+                        // CameraDrift transform invalidating the compositing context,
+                        // adding seconds per frame. Slightly lower opacity achieves
+                        // the same subtle watermark effect.
+                    }}
                 />
             </AbsoluteFill>
 
             {/* Neural network layer */}
-            {showNeural && <NeuralNetwork intensity={neuralIntensity} />}
+            {showNeural && theme === 'dark' && <NeuralNetwork intensity={neuralIntensity} />}
 
             {/* Particle field layer */}
-            {showParticles && <ParticleField intensity={particleIntensity} />}
+            {showParticles && theme === 'dark' && <ParticleField intensity={particleIntensity} />}
 
             {/* Content layer */}
             <AbsoluteFill>{children}</AbsoluteFill>
@@ -77,28 +95,33 @@ export const Layout: React.FC<LayoutProps> = ({
             <div
                 style={{
                     position: 'absolute',
-                    bottom: -20,
-                    right: 20,
-                    opacity: 0.9,
-                    zIndex: 10,
+                    bottom: 40,
+                    right: 40,
+                    opacity: 1,
+                    zIndex: 50,
                     transform: 'rotate(-5deg)',
                 }}
             >
                 <Img
                     src={staticFile('assets/mochi/mochi.png')}
-                    style={{ width: 120, height: 120, objectFit: 'contain' }}
+                    style={{ 
+                        width: 140, 
+                        height: 140, 
+                        objectFit: 'contain',
+                        filter: 'drop-shadow(0px 10px 20px rgba(0,0,0,0.4))'
+                    }}
                 />
             </div>
 
             {/* Post-processing layers */}
-            {showGrain && <FilmGrain />}
-            {showVignette && <Vignette />}
+            {showGrain && theme === 'dark' && <FilmGrain />}
+            {showVignette && theme === 'dark' && <Vignette />}
         </AbsoluteFill>
     );
 
     if (showDrift) {
         return (
-            <AbsoluteFill style={{ backgroundColor: COLORS.bgPrimary }}>
+            <AbsoluteFill style={{ backgroundColor: theme === 'light' ? '#FFFFFF' : COLORS.bgPrimary }}>
                 <CameraDrift>{content}</CameraDrift>
             </AbsoluteFill>
         );

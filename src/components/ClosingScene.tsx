@@ -10,6 +10,7 @@ import {
 import { COLORS } from '../brand/colors';
 import { FONTS } from '../brand/fonts';
 import { SPACING } from '../brand/tokens';
+import { TypewriterText } from '../animations/TypewriterText';
 import { SocialPill } from './SocialPill';
 
 interface ClosingSceneProps {
@@ -17,6 +18,9 @@ interface ClosingSceneProps {
     showMochi?: boolean;
     mochiImage?: string;
     logoPath?: string;
+    theme?: 'light' | 'dark';
+    poweredByLogoPath?: string;
+    accentColor?: string;
     socialLinks?: { label: string; url: string }[];
 }
 
@@ -29,6 +33,9 @@ export const ClosingScene: React.FC<ClosingSceneProps> = ({
     showMochi = true,
     mochiImage = 'assets/mochi/mochi.png',
     logoPath = 'assets/logos/GenLayer_Logo_White_Cropped.png',
+    theme = 'dark',
+    poweredByLogoPath,
+    accentColor,
     socialLinks = [
         { label: 'Website', url: 'genlayer.com' },
         { label: 'Discord', url: 'discord.gg/genlayer' },
@@ -93,7 +100,7 @@ export const ClosingScene: React.FC<ClosingSceneProps> = ({
                     width: 600,
                     height: 300,
                     borderRadius: '50%',
-                    background: `radial-gradient(ellipse, ${COLORS.accentPrimary}15 0%, transparent 70%)`,
+                    background: `radial-gradient(ellipse, ${accentColor || COLORS.accentPrimary}15 0%, transparent 70%)`,
                     opacity: glowPulse,
                 }}
             />
@@ -104,12 +111,21 @@ export const ClosingScene: React.FC<ClosingSceneProps> = ({
                     opacity: logoOpacity,
                     transform: `scale(${logoScale})`,
                     marginBottom: SPACING.lg,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
                 }}
             >
                 <Img
                     src={staticFile(logoPath)}
-                    style={{ height: 60, objectFit: 'contain' }}
+                    style={{ height: 180, objectFit: 'contain' }}
                 />
+                {poweredByLogoPath && (
+                    <div style={{ marginTop: SPACING.md, display: 'flex', alignItems: 'center', gap: SPACING.sm }}>
+                        <span style={{ fontFamily: FONTS.primary, fontSize: 18, fontWeight: FONTS.weights.bold, color: theme === 'light' ? '#333' : COLORS.textMuted }}>Powered by</span>
+                        <Img src={staticFile(poweredByLogoPath)} style={{ height: 48, objectFit: 'contain' }} />
+                    </div>
+                )}
             </div>
 
             {/* Tagline */}
@@ -117,8 +133,8 @@ export const ClosingScene: React.FC<ClosingSceneProps> = ({
                 style={{
                     fontFamily: FONTS.primary,
                     fontSize: FONTS.sizes.h3,
-                    fontWeight: FONTS.weights.medium,
-                    color: COLORS.textSecondary,
+                    fontWeight: FONTS.weights.black, // Bolder for high impact
+                    color: theme === 'light' ? '#000' : COLORS.textSecondary,
                     opacity: taglineOpacity,
                     transform: `translateY(${taglineY}px)`,
                     textAlign: 'center',
@@ -126,7 +142,20 @@ export const ClosingScene: React.FC<ClosingSceneProps> = ({
                     marginBottom: SPACING.xxl,
                 }}
             >
-                {tagline}
+                                    <TypewriterText
+                        text={tagline}
+                        startFrame={60}
+                        framesPerChar={1}
+                        style={{
+                            fontFamily: FONTS.primary,
+                            fontSize: FONTS.sizes.h3,
+                            fontWeight: FONTS.weights.black,
+                            color: theme === 'light' ? '#000' : COLORS.textSecondary,
+                            textAlign: 'center',
+                            letterSpacing: 2,
+                            marginBottom: SPACING.xxl,
+                        }}
+                    />
             </div>
 
             {/* Mochi */}
@@ -150,17 +179,22 @@ export const ClosingScene: React.FC<ClosingSceneProps> = ({
                 </div>
             )}
 
-            {/* Social links */}
+            {/* Social links (Two Rows) */}
             <div
                 style={{
                     display: 'flex',
-                    gap: SPACING.xl,
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: SPACING.lg,
                     opacity: linksOpacity,
                 }}
             >
-                <SocialPill label="genlayer.com" color="#3B82F6" />
-                <SocialPill label="@GenLayer" color="#1DA1F2" />
-                <SocialPill label="discord.gg/genlayer" color="#5865F2" />
+                {/* Row 1: GenLayer */}
+                <div style={{ display: 'flex', gap: SPACING.xl }}>
+                    <SocialPill label="genlayer.com" color="#3B82F6" theme={theme} typewriter />
+                    <SocialPill label="@GenLayer" color="#1DA1F2" theme={theme} typewriter />
+                    <SocialPill label="discord.gg/genlayer" color="#5865F2" theme={theme} typewriter />
+                </div>
             </div>
         </AbsoluteFill>
     );

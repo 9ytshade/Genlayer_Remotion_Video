@@ -5,22 +5,30 @@ import {
     interpolate,
     Easing,
 } from 'remotion';
-import { Layout } from '../components/Layout';
-import { TitleScene } from '../components/TitleScene';
+import { ElegantLayout } from '../components/ElegantLayout';
+import { ElegantTitleScene } from '../components/ElegantTitleScene';
 import { ConceptReveal } from '../components/ConceptReveal';
 import { IconGridScene } from '../components/IconGridScene';
 import { StatCounterScene } from '../components/StatCounterScene';
 import { ClosingScene } from '../components/ClosingScene';
-import { SceneSequence } from '../transitions/TransitionEngine';
+import { ElegantSceneSequence } from '../transitions/ElegantTransitionEngine';
+import { TypewriterText } from '../animations/TypewriterText';
 import { COLORS } from '../brand/colors';
 import { FONTS } from '../brand/fonts';
 import { s } from '../brand/tokens';
 import { useEnergyFactor } from '../animations/EnergyBuild';
 
 /** Full-screen cinematic text statement — used for the final video */
-const CinematicStatement: React.FC<{ lines: string[]; accentLine?: number }> = ({
+const CinematicStatement: React.FC<{
+    lines: string[];
+    accentLine?: number;
+    durationInFrames?: number;
+    framesPerChar?: number;
+}> = ({
     lines,
     accentLine = 0,
+    durationInFrames,
+    framesPerChar = 1.5,
 }) => {
     const frame = useCurrentFrame();
     return (
@@ -37,17 +45,36 @@ const CinematicStatement: React.FC<{ lines: string[]; accentLine?: number }> = (
         >
             {lines.map((line, i) => {
                 const delay = i * 18;
-                const opacity = interpolate(frame, [delay, delay + 20], [0, 1], {
+
+                const exitDuration = 15;
+                const exitStagger = 6;
+                const exitDelay = durationInFrames ? durationInFrames - 20 - exitStagger * (lines.length - 1 - i) : Infinity;
+
+                const opacityEntry = interpolate(frame, [delay, delay + 20], [0, 1], {
                     extrapolateLeft: 'clamp',
                     extrapolateRight: 'clamp',
                     easing: Easing.out(Easing.cubic),
                 });
-                const translateY = interpolate(frame, [delay, delay + 20], [30, 0], {
+                const opacityExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [1, 0], {
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                    easing: Easing.inOut(Easing.cubic),
+                });
+                const opacity = Math.min(opacityEntry, opacityExit);
+
+                const translateYEntry = interpolate(frame, [delay, delay + 20], [30, 0], {
                     extrapolateLeft: 'clamp',
                     extrapolateRight: 'clamp',
                     easing: Easing.out(Easing.cubic),
                 });
+                const translateYExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [0, -30], {
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                    easing: Easing.inOut(Easing.cubic),
+                });
+                const translateY = frame > exitDelay ? translateYExit : translateYEntry;
                 const isAccent = i === accentLine;
+
                 return (
                     <div
                         key={i}
@@ -62,9 +89,16 @@ const CinematicStatement: React.FC<{ lines: string[]; accentLine?: number }> = (
                             textShadow: isAccent
                                 ? `0 0 60px ${COLORS.accentPrimary}60, 0 0 120px ${COLORS.accentPrimary}30`
                                 : 'none',
+                            marginBottom: 6,
                         }}
                     >
-                        {line}
+                        <TypewriterText
+                            text={line}
+                            startFrame={delay}
+                            framesPerChar={framesPerChar}
+                            style={{ display: 'inline-block' }}
+                            hideCursorAfterDone={true}
+                        />
                     </div>
                 );
             })}
@@ -76,14 +110,14 @@ export const Video20_OpenToAll: React.FC = () => {
     const energy = useEnergyFactor(s(120));
 
     return (
-        <Layout neuralIntensity={energy} particleIntensity={energy}>
-            <SceneSequence
+        <ElegantLayout intensity={energy}>
+            <ElegantSceneSequence
                 scenes={[
                     {
                         id: 'title',
                         durationInFrames: s(5),
                         component: (
-                            <TitleScene
+                            <ElegantTitleScene
                                 title="Opening GenLayer to All Blockchains"
                                 subtitle="Universal Intelligence"
                                 episodeNumber={20}
@@ -101,6 +135,7 @@ export const Video20_OpenToAll: React.FC = () => {
                                     'for the entire crypto ecosystem.',
                                 ]}
                                 accentLine={1}
+                                framesPerChar={1}
                             />
                         ),
                     },
@@ -117,7 +152,7 @@ export const Video20_OpenToAll: React.FC = () => {
                     },
                     {
                         id: 'vision',
-                        durationInFrames: s(18),
+                        durationInFrames: s(24),
                         component: (
                             <IconGridScene
                                 heading="The Vision - Universal Brain"
@@ -127,6 +162,9 @@ export const Video20_OpenToAll: React.FC = () => {
                                     { emoji: '💎', label: 'Ethereum DeFi', sublabel: 'Protocol uses GenLayer for AI risk scores', color: COLORS.accentSecondary },
                                     { emoji: '🎮', label: 'Solana Gaming', sublabel: 'NPC dialogue powered by GenLayer intelligence', color: COLORS.accentTertiary },
                                     { emoji: '🌐', label: 'Any Chain', sublabel: 'GenLayer exports intelligence everywhere', color: COLORS.accentPrimary },
+                                    { emoji: '🧠', label: 'Code + Common Sense', sublabel: 'Execute programmatic logic with subjective reasoning', color: COLORS.accentTertiary },
+                                    { emoji: '📄', label: 'Unstructured Data', sublabel: 'Interpret natural language and images directly on-chain', color: COLORS.accentPrimary },
+                                    { emoji: '🌍', label: 'Native Web Access', sublabel: 'Fetch real-time internet data without oracles', color: COLORS.accentSecondary },
                                 ]}
                             />
                         ),
@@ -139,9 +177,9 @@ export const Video20_OpenToAll: React.FC = () => {
                                 heading="The Scale of What We're Building"
                                 accentColor={COLORS.accentPrimary}
                                 stats={[
-                                    { value: '20+', label: 'Videos Released', sublabel: 'Telling the GenLayer story', color: COLORS.accentSecondary },
-                                    { value: '∞', label: 'Chains Supported', sublabel: 'Universal intelligence layer', color: COLORS.accentPrimary },
-                                    { value: '#1', label: 'Intelligent Blockchain', sublabel: 'The first and the best', color: COLORS.accentTertiary },
+                                    { value: '$100B+', label: 'Liquidity Unlocked', sublabel: 'Accessing massive cross-chain DeFi capital natively with AI', color: COLORS.accentSecondary },
+                                    { value: '∞', label: 'Cross-Chain Reach', sublabel: 'Seamlessly exporting intelligent logic to ANY external network', color: COLORS.accentPrimary },
+                                    { value: '< 1s', label: 'Sub-Second Finality', sublabel: 'Instantly executing AI-driven outcomes via Optimistic Democracy', color: COLORS.accentTertiary },
                                 ]}
                             />
                         ),
@@ -157,6 +195,7 @@ export const Video20_OpenToAll: React.FC = () => {
                                     'Join the revolution.',
                                 ]}
                                 accentLine={2}
+                                framesPerChar={1}
                             />
                         ),
                     },
@@ -167,6 +206,6 @@ export const Video20_OpenToAll: React.FC = () => {
                     },
                 ]}
             />
-        </Layout>
+        </ElegantLayout>
     );
 };

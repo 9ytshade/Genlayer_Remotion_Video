@@ -31,16 +31,19 @@ export const Video11_AutonomousDAOs: React.FC = () => {
                     },
                     {
                         id: 'problem',
-                        durationInFrames: s(15),
+                        durationInFrames: s(24),
                         component: (
                             <IconGridScene
                                 heading="The DAO Bottleneck Today"
                                 columns={3}
                                 accentColor={COLORS.accentSecondary}
                                 items={[
-                                    { emoji: '🕐', label: 'Weeks to Decide', sublabel: 'Voting is painfully slow', color: COLORS.textMuted },
-                                    { emoji: '😴', label: 'Low Participation', sublabel: 'Most token holders never vote', color: COLORS.textMuted },
-                                    { emoji: '🏛️', label: 'Just Multisigs', sublabel: 'Controlled by a few humans', color: COLORS.textMuted },
+                                    { emoji: '🕐', label: 'Paralyzing Bureaucracy', sublabel: 'Governance proposals take weeks to pass, fatally stalling critical protocol upgrades', color: COLORS.textMuted },
+                                    { emoji: '😴', label: 'Voter Apathy', sublabel: 'The vast majority of token holders are too overwhelmed to read complex, highly technical proposals', color: COLORS.textMuted },
+                                    { emoji: '🏛️', label: 'Centralized Multisigs', sublabel: 'Ultimately controlled by a handful of human signers, completely betraying the promise of decentralization', color: COLORS.textMuted },
+                                    { emoji: '🧱', label: 'Rigid Smart Contracts', sublabel: 'Unable to process nuance, requiring developers to manually hardcode every single possible edge case', color: COLORS.accentSecondary },
+                                    { emoji: '🦯', label: 'Blind to Reality', sublabel: 'Completely incapable of assessing real-world off-chain events without expensive, highly trusted oracles', color: COLORS.textMuted },
+                                    { emoji: '⚔️', label: 'Governance Attacks', sublabel: 'Vulnerable to malicious actors flooding the network with deceptive, Trojan-horse governance proposals', color: COLORS.accentTertiary },
                                 ]}
                             />
                         ),
@@ -75,7 +78,7 @@ export const Video11_AutonomousDAOs: React.FC = () => {
                     },
                     {
                         id: 'vision',
-                        durationInFrames: s(18),
+                        durationInFrames: s(24),
                         component: (
                             <TimelineScene
                                 heading="DAO Evolution"
@@ -84,21 +87,21 @@ export const Video11_AutonomousDAOs: React.FC = () => {
                                     {
                                         label: 'Today',
                                         title: 'Digital Bureaucracy',
-                                        description: 'Multisig wallets. Weeks of voting. Low participation.',
+                                        description: 'Stifled by voter apathy and slow, manual multisig execution. Protocols are completely unable to rapidly adapt to live market conditions.',
                                         color: COLORS.textMuted,
                                         status: 'done',
                                     },
                                     {
                                         label: 'With GenLayer',
-                                        title: 'AI-Assisted Governance',
-                                        description: 'Routine decisions automated. Humans vote on major shifts only.',
+                                        title: 'Intelligent Delegation',
+                                        description: 'Routine operations and moderation are instantly executed by AI delegates. Human token-holders are only called upon for core protocol pivots.',
                                         color: COLORS.accentSecondary,
                                         status: 'active',
                                     },
                                     {
                                         label: 'The Future',
-                                        title: 'Fully Autonomous Organizations',
-                                        description: 'Self-driving DAOs operating at the speed of software.',
+                                        title: 'Self-Driving Protocols',
+                                        description: 'Fully autonomous DAOs continuously parsing web data, managing their own treasuries, and executing complex strategy entirely at the speed of software.',
                                         color: COLORS.accentPrimary,
                                         status: 'upcoming',
                                     },

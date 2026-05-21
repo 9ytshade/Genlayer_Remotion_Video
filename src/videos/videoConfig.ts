@@ -97,7 +97,7 @@ export const VIDEO_CONFIG: VideoEntry[] = [
         id: 'Video13',
         title: 'Code with Python & Natural Language',
         description: 'Developer experience — writing contracts in Python, GenLayer Studio.',
-        durationInFrames: s(120),
+        durationInFrames: s(140),
         episode: 13,
     },
     {
@@ -139,7 +139,7 @@ export const VIDEO_CONFIG: VideoEntry[] = [
         id: 'Video19',
         title: 'GenLayer Partnerships',
         description: 'ZKsync, io.net, LibertAI, Atoma, Gaia, Caldera — building the ecosystem.',
-        durationInFrames: s(120),
+        durationInFrames: s(145),
         episode: 19,
     },
     {
@@ -148,5 +148,12 @@ export const VIDEO_CONFIG: VideoEntry[] = [
         description: 'Cross-chain interoperability and the vision for universal access.',
         durationInFrames: s(120),
         episode: 20,
+    },
+    {
+        id: 'Special01',
+        title: 'Internet Court: The Neural Legal System',
+        description: 'An AI-native dispute resolution protocol for the agentic economy.',
+        durationInFrames: s(112),
+        episode: 21,
     },
 ];

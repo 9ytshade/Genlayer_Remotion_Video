@@ -7,11 +7,11 @@ import {
     Img,
     staticFile,
 } from 'remotion';
-import { MaskedTextReveal } from '../animations/MaskedTextReveal';
+import { TypewriterText } from '../animations/TypewriterText';
 import { SignalWave } from '../animations/SignalWave';
 import { COLORS } from '../brand/colors';
 import { FONTS } from '../brand/fonts';
-import { SPACING } from '../brand/tokens';
+import { LAYOUT, SPACING } from '../brand/tokens';
 
 interface ConceptRevealProps {
     term: string;
@@ -21,6 +21,12 @@ interface ConceptRevealProps {
     pills?: string[];
     logoSrc?: string;
     logoCount?: number;
+    theme?: 'light' | 'dark';
+    termFontSize?: number;
+    termFontWeight?: number;
+    termColor?: string;
+    typewriterFramesPerChar?: number;
+    typewriterStartFrame?: number;
 }
 
 /**
@@ -35,7 +41,14 @@ export const ConceptReveal: React.FC<ConceptRevealProps> = ({
     pills,
     logoSrc,
     logoCount = 0,
+    theme = 'dark',
+    termFontSize = FONTS.sizes.display + 8,
+    termFontWeight = FONTS.weights.black,
+    termColor,
+    typewriterFramesPerChar = 1.5,
+    typewriterStartFrame = 8,
 }) => {
+    if (!termColor) termColor = accentColor;
     const frame = useCurrentFrame();
 
     // Glow expansion
@@ -77,6 +90,7 @@ export const ConceptReveal: React.FC<ConceptRevealProps> = ({
             style={{
                 justifyContent: 'center',
                 alignItems: 'center',
+                padding: `0 ${LAYOUT.contentPadding}px`,
             }}
         >
             {/* Background glow */}
@@ -160,14 +174,17 @@ export const ConceptReveal: React.FC<ConceptRevealProps> = ({
                 })}
 
             {/* Main term */}
-            <MaskedTextReveal
+            <TypewriterText
                 text={term}
-                startFrame={8}
-                duration={22}
-                fontSize={FONTS.sizes.display + 8}
-                fontWeight={FONTS.weights.black}
-                color={accentColor}
-                style={{ textAlign: 'center' }}
+                startFrame={typewriterStartFrame}
+                framesPerChar={typewriterFramesPerChar}
+                style={{
+                    textAlign: 'center',
+                    fontFamily: FONTS.primary,
+                    fontSize: termFontSize,
+                    fontWeight: termFontWeight,
+                    color: termColor,
+                }}
             />
 
             {/* Decorative lines */}
@@ -243,7 +260,7 @@ export const ConceptReveal: React.FC<ConceptRevealProps> = ({
                                 fontFamily: FONTS.primary,
                                 fontSize: FONTS.sizes.h3,
                                 fontWeight: FONTS.weights.regular,
-                                color: COLORS.textSecondary,
+                                color: theme === 'light' ? '#333' : COLORS.textSecondary,
                                 textAlign: 'center',
                                 maxWidth: 1000,
                                 lineHeight: FONTS.lineHeights.relaxed,

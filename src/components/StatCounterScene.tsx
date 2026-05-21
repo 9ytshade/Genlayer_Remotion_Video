@@ -4,8 +4,10 @@ import {
     useCurrentFrame,
     interpolate,
     Easing,
+    random,
 } from 'remotion';
 import { MaskedTextReveal } from '../animations/MaskedTextReveal';
+import { TypewriterText } from '../animations/TypewriterText';
 import { COLORS } from '../brand/colors';
 import { FONTS } from '../brand/fonts';
 import { LAYOUT, SPACING } from '../brand/tokens';
@@ -23,6 +25,8 @@ interface StatCounterSceneProps {
     stats: Stat[];
     bodyText?: string;
     accentColor?: string;
+    theme?: 'light' | 'dark';
+    durationInFrames?: number;
 }
 
 /**
@@ -34,6 +38,8 @@ export const StatCounterScene: React.FC<StatCounterSceneProps> = ({
     stats,
     bodyText,
     accentColor = COLORS.accentPrimary,
+    theme = 'dark',
+    durationInFrames,
 }) => {
     const frame = useCurrentFrame();
 
@@ -48,13 +54,17 @@ export const StatCounterScene: React.FC<StatCounterSceneProps> = ({
             }}
         >
             {/* Heading */}
-            <MaskedTextReveal
-                text={heading}
-                startFrame={5}
-                duration={20}
-                fontSize={FONTS.sizes.h2}
-                fontWeight={FONTS.weights.bold}
-            />
+            <div style={{ textAlign: 'center', width: '100%' }}>
+                <MaskedTextReveal
+                    text={heading}
+                    startFrame={5}
+                    duration={20}
+                    fontSize={FONTS.sizes.h2}
+                    fontWeight={FONTS.weights.bold}
+                    color={theme === 'light' ? '#000' : COLORS.textPrimary}
+                    style={{ textAlign: 'center' }}
+                />
+            </div>
 
             {/* Stats row */}
             <div
@@ -66,19 +76,66 @@ export const StatCounterScene: React.FC<StatCounterSceneProps> = ({
                 }}
             >
                 {stats.map((stat, i) => {
-                    const delay = stagger(i, 12) + 20;
-                    const opacity = interpolate(
+                    const delay = stagger(i, 24) + 20;
+                    
+                    const exitDuration = 15;
+                    const exitStagger = 6;
+                    // Start exiting items in reverse order 25 frames before the end
+                    const exitDelay = durationInFrames ? durationInFrames - 25 - exitStagger * (stats.length - 1 - i) : Infinity;
+
+                    // Randomize directions for entry and exit
+                    const entryAngle = random(`stat-enter-${heading}-${i}`) * Math.PI * 2;
+                    const exitAngle = random(`stat-exit-${heading}-${i}`) * Math.PI * 2;
+                    
+                    const startX = Math.cos(entryAngle) * 300;
+                    const startY = Math.sin(entryAngle) * 300;
+                    const endX = Math.cos(exitAngle) * 300;
+                    const endY = Math.sin(exitAngle) * 300;
+
+                    const entryOpacity = interpolate(
                         frame,
                         [delay, delay + 18],
                         [0, 1],
                         { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic) }
                     );
-                    const scale = interpolate(
+                    const exitOpacity = interpolate(
+                        frame,
+                        [exitDelay, exitDelay + exitDuration],
+                        [1, 0],
+                        { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic) }
+                    );
+                    const opacity = Math.min(entryOpacity, exitOpacity);
+
+                    const entryScale = interpolate(
                         frame,
                         [delay, delay + 18],
                         [0.6, 1],
                         { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(1.2)) }
                     );
+                    const exitScale = interpolate(
+                        frame,
+                        [exitDelay, exitDelay + exitDuration],
+                        [1, 0.6],
+                        { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic) }
+                    );
+                    const scale = frame > exitDelay ? exitScale : entryScale;
+
+                    const translateYEntry = interpolate(frame, [delay, delay + 18], [startY, 0], {
+                        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)
+                    });
+                    const translateYExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [0, endY], {
+                        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)
+                    });
+                    const translateY = frame > exitDelay ? translateYExit : translateYEntry;
+
+                    const translateXEntry = interpolate(frame, [delay, delay + 18], [startX, 0], {
+                        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)
+                    });
+                    const translateXExit = interpolate(frame, [exitDelay, exitDelay + exitDuration], [0, endX], {
+                        extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)
+                    });
+                    const translateX = frame > exitDelay ? translateXExit : translateXEntry;
+
                     // Glow pulse
                     const glowPulse = interpolate(
                         frame,
@@ -93,7 +150,7 @@ export const StatCounterScene: React.FC<StatCounterSceneProps> = ({
                             key={i}
                             style={{
                                 opacity,
-                                transform: `scale(${scale})`,
+                                transform: `translateX(${translateX}px) translateY(${translateY}px) scale(${scale})`,
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'flex-start',
@@ -122,30 +179,32 @@ export const StatCounterScene: React.FC<StatCounterSceneProps> = ({
                             </div>
 
                             {/* Label */}
-                            <div
+                            <TypewriterText
+                                text={stat.label}
+                                startFrame={delay + 10}
+                                framesPerChar={1}
                                 style={{
                                     fontFamily: FONTS.primary,
                                     fontSize: FONTS.sizes.h3,
                                     fontWeight: FONTS.weights.bold,
-                                    color: COLORS.textPrimary,
+                                    color: theme === 'light' ? '#222' : COLORS.textPrimary,
                                 }}
-                            >
-                                {stat.label}
-                            </div>
-
+                            />
                             {/* Sublabel */}
                             {stat.sublabel && (
-                                <div
+                                <TypewriterText
+                                    text={stat.sublabel}
+                                    startFrame={delay + 20}
+                                    framesPerChar={0.8}
                                     style={{
                                         fontFamily: FONTS.primary,
                                         fontSize: FONTS.sizes.body,
                                         fontWeight: FONTS.weights.regular,
-                                        color: COLORS.textSecondary,
+                                        color: theme === 'light' ? '#444' : COLORS.textSecondary,
                                         lineHeight: 1.5,
+                                        minHeight: 50, // Reserve space to avoid layout jumps
                                     }}
-                                >
-                                    {stat.sublabel}
-                                </div>
+                                />
                             )}
                         </div>
                     );
@@ -154,11 +213,18 @@ export const StatCounterScene: React.FC<StatCounterSceneProps> = ({
 
             {/* Optional body text */}
             {bodyText && (() => {
-                const bodyOpacity = interpolate(frame, [60, 80], [0, 1], {
+                const bodyOpacityEntry = interpolate(frame, [60, 80], [0, 1], {
                     extrapolateLeft: 'clamp',
                     extrapolateRight: 'clamp',
                     easing: Easing.out(Easing.cubic),
                 });
+                const bodyOpacityExit = durationInFrames ? interpolate(frame, [durationInFrames - 30, durationInFrames - 15], [1, 0], {
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp',
+                    easing: Easing.inOut(Easing.cubic),
+                }) : 1;
+                const bodyOpacity = Math.min(bodyOpacityEntry, bodyOpacityExit);
+
                 return (
                     <div
                         style={{

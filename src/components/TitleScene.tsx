@@ -7,7 +7,7 @@ import {
     interpolate,
     Easing,
 } from 'remotion';
-import { MaskedTextReveal } from '../animations/MaskedTextReveal';
+import { TypewriterText } from '../animations/TypewriterText';
 import { COLORS } from '../brand/colors';
 import { FONTS } from '../brand/fonts';
 import { LAYOUT, SPACING } from '../brand/tokens';
@@ -17,7 +17,12 @@ interface TitleSceneProps {
     subtitle?: string;
     showLogo?: boolean;
     logoPath?: string;
+    coBrandLogoPath?: string;
+    logoHeight?: number;
+    coBrandLogoHeight?: number;
     episodeNumber?: number;
+    accentColor?: string;
+    theme?: 'light' | 'dark';
 }
 
 /**
@@ -30,7 +35,12 @@ export const TitleScene: React.FC<TitleSceneProps> = ({
     subtitle,
     showLogo = true,
     logoPath = 'assets/logos/GenLayer_Logo_White_Cropped.png',
+    coBrandLogoPath,
+    logoHeight = 80,
+    coBrandLogoHeight = 80,
     episodeNumber,
+    accentColor = COLORS.accentPrimary,
+    theme = 'dark',
 }) => {
     const frame = useCurrentFrame();
 
@@ -91,7 +101,7 @@ export const TitleScene: React.FC<TitleSceneProps> = ({
                         fontFamily: FONTS.primary,
                         fontSize: FONTS.sizes.label,
                         fontWeight: FONTS.weights.medium,
-                        color: COLORS.accentPrimary,
+                        color: accentColor,
                         opacity: episodeOpacity,
                         letterSpacing: 4,
                         textTransform: 'uppercase',
@@ -108,23 +118,40 @@ export const TitleScene: React.FC<TitleSceneProps> = ({
                         marginBottom: SPACING.xl,
                         opacity: logoOpacity,
                         transform: `scale(${logoScale})`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: SPACING.xl,
                     }}
                 >
                     <Img
                         src={staticFile(logoPath)}
-                        style={{ height: 50, objectFit: 'contain' }}
+                        style={{ height: logoHeight, objectFit: 'contain' }}
                     />
+                    {coBrandLogoPath && (
+                        <>
+                            <div style={{ color: theme === 'light' ? '#000' : '#FFF', fontSize: 32, fontWeight: 'bold' }}>✕</div>
+                            <Img
+                                src={staticFile(coBrandLogoPath)}
+                                style={{ height: coBrandLogoHeight, objectFit: 'contain' }}
+                            />
+                        </>
+                    )}
                 </div>
             )}
 
             {/* Title */}
-            <MaskedTextReveal
+            <TypewriterText
                 text={title}
                 startFrame={35}
-                duration={25}
-                fontSize={FONTS.sizes.display}
-                fontWeight={FONTS.weights.black}
-                style={{ textAlign: 'center', maxWidth: 1400 }}
+                framesPerChar={1}
+                style={{
+                    fontFamily: FONTS.primary,
+                    fontSize: FONTS.sizes.display,
+                    fontWeight: FONTS.weights.black,
+                    color: theme === 'light' ? '#000000' : COLORS.textPrimary,
+                    textAlign: 'center',
+                    maxWidth: 1400,
+                }}
             />
 
             {/* Decorative line */}
@@ -132,7 +159,7 @@ export const TitleScene: React.FC<TitleSceneProps> = ({
                 style={{
                     width: lineWidth,
                     height: 2,
-                    background: `linear-gradient(90deg, transparent, ${COLORS.accentPrimary}, transparent)`,
+                    background: `linear-gradient(90deg, transparent, ${accentColor}, transparent)`,
                     marginTop: SPACING.lg,
                     marginBottom: SPACING.lg,
                 }}
@@ -145,7 +172,7 @@ export const TitleScene: React.FC<TitleSceneProps> = ({
                         fontFamily: FONTS.primary,
                         fontSize: FONTS.sizes.h4,
                         fontWeight: FONTS.weights.regular,
-                        color: COLORS.textMuted,
+                        color: theme === 'light' ? '#444444' : COLORS.textMuted,
                         opacity: subtitleOpacity,
                         transform: `translateY(${subtitleY}px)`,
                         textAlign: 'center',

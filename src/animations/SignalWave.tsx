@@ -11,6 +11,13 @@ interface SignalWaveProps {
     thickness?: number;
 }
 
+/**
+ * Signal wave sweep animation.
+ * 
+ * Previously used SVG feGaussianBlur for the glow effect, which was
+ * expensive on a 200-segment polyline. Now uses layered strokes of
+ * decreasing thickness and opacity for the same visual result.
+ */
 export const SignalWave: React.FC<SignalWaveProps> = ({
     triggerFrame,
     duration = 36,
@@ -57,6 +64,8 @@ export const SignalWave: React.FC<SignalWaveProps> = ({
         points.push(`${x},${y}`);
     }
 
+    const pointsStr = points.join(' ');
+
     return (
         <div style={{ ...fullScreen, pointerEvents: 'none' }}>
             <svg
@@ -65,29 +74,31 @@ export const SignalWave: React.FC<SignalWaveProps> = ({
                 viewBox={`0 0 ${COMP.width} ${COMP.height}`}
                 style={fullScreen}
             >
-                <defs>
-                    <filter id="signal-glow">
-                        <feGaussianBlur stdDeviation="6" result="blur" />
-                        <feMerge>
-                            <feMergeNode in="blur" />
-                            <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                    </filter>
-                </defs>
-
-                {/* Glow layer */}
+                {/* Outer glow layer — replaces expensive feGaussianBlur */}
                 <polyline
-                    points={points.join(' ')}
+                    points={pointsStr}
+                    fill="none"
+                    stroke={color}
+                    strokeWidth={thickness * 8}
+                    opacity={opacity * 0.08}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+
+                {/* Mid glow layer */}
+                <polyline
+                    points={pointsStr}
                     fill="none"
                     stroke={color}
                     strokeWidth={thickness * 4}
-                    opacity={opacity * 0.3}
-                    filter="url(#signal-glow)"
+                    opacity={opacity * 0.2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                 />
 
                 {/* Core line */}
                 <polyline
-                    points={points.join(' ')}
+                    points={pointsStr}
                     fill="none"
                     stroke={color}
                     strokeWidth={thickness}
